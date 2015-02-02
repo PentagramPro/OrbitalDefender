@@ -6,11 +6,17 @@ public class DirectionIndicatorController : MonoBehaviour {
 
 	Image image;
 	RectTransform rt;
+	public RectTransform Arrow;
+
 	float fullH = 1;
 	// Use this for initialization
-	void Start () {
+	void Awake()
+	{
 		rt = GetComponent<RectTransform>();
 		image = GetComponent<Image>();
+	}
+	void Start () {
+
 		fullH = rt.rect.height;
 	}
 	
@@ -22,6 +28,7 @@ public class DirectionIndicatorController : MonoBehaviour {
 	public bool Visible{
 		set{
 			image.enabled = value;
+			Arrow.gameObject.SetActive(value);
 		}
 	}
 	public void SetOrientation(Vector2 pt1, Vector2 pt2)
@@ -31,6 +38,9 @@ public class DirectionIndicatorController : MonoBehaviour {
 		float a = Vector2.Angle(dir,new Vector2(-1,0))-90;
 		rt.rotation = Quaternion.Euler(0,0,a);
 		rt.localScale = new Vector2(1,dir.magnitude/fullH);
+
+		Arrow.position = pt1+(-dir).normalized*10;
+		Arrow.rotation = Quaternion.Euler(0,0,a+90);
 		//Debug.Log("New:"+rt.rotation.eulerAngles);
 	}
 }

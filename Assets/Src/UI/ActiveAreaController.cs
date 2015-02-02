@@ -10,7 +10,10 @@ public class ActiveAreaController : MonoBehaviour, IDragHandler, IBeginDragHandl
 	public GunController Gun;
 	public DirectionIndicatorController DirIndicator;
 
+
 	public float TargetingR=10, ActiveR=1;
+	//float FireStrength = 0;
+	Vector2 FireDirection;
 	RectTransform rt;
 	Modes state = Modes.Idle;
 
@@ -60,12 +63,15 @@ public class ActiveAreaController : MonoBehaviour, IDragHandler, IBeginDragHandl
 			if(rad.magnitude>ActiveR)
 			{
 				DirIndicator.Visible = true;
-
+				FireDirection = -rad/TargetingR;
 				DirIndicator.SetOrientation(rt.position,pt2);
+				Gun.OnMoveBarrel(FireDirection);
+
 			}
 			else
 			{
 				DirIndicator.Visible = false;
+				FireDirection = Vector2.zero;
 			}
 		}
 	}
@@ -96,6 +102,10 @@ public class ActiveAreaController : MonoBehaviour, IDragHandler, IBeginDragHandl
 			TargetingArea.gameObject.SetActive(false);
 			DirIndicator.Visible = false;
 			state = Modes.Idle;
+			if(FireDirection.magnitude>0)
+			{
+				Gun.OnFire(FireDirection);
+			}
 		}
 	}
 
