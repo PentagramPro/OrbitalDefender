@@ -5,7 +5,7 @@ public class GunController : MonoBehaviour {
 
 	public MissileController MissilePrefab;
 	public BarrelController Barrel;
-
+	public float FireStrength = 100;
 	// Use this for initialization
 	void Start () {
 	
@@ -25,8 +25,8 @@ public class GunController : MonoBehaviour {
 	{
 		GameObject go = GameObject.Instantiate(MissilePrefab.gameObject) as GameObject;
 		MissileController mc = go.GetComponent<MissileController>();
-		mc.transform.position = transform.position;
-		mc.rigidbody2D.AddForce(direction*200,ForceMode2D.Impulse);
-
+		mc.transform.position = (Vector2)transform.position+direction.normalized*3;
+		mc.rigidbody2D.AddForce(direction*FireStrength,ForceMode2D.Impulse);
+		mc.SendMessage("OnFire", direction);
 	}
 }

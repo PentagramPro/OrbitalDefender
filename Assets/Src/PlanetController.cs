@@ -9,7 +9,7 @@ public class PlanetController : MonoBehaviour {
 	void Start () {
 		EnemyShipController ship = ((GameObject)Object.Instantiate(EnemyShipPrefab.gameObject)).GetComponent<EnemyShipController>();
 
-		Vector2 orbit =  new Vector2(0,100).Rotate(Random.Range(0,359));
+		Vector2 orbit =  new Vector2(0,30).Rotate(Random.Range(0,359));
 		Vector2 trace = new Vector2(orbit.y,-orbit.x).normalized*300;
 
 		ship.OrbitPoint = orbit+(Vector2)transform.position;
