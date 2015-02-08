@@ -6,6 +6,12 @@ public class GunController : MonoBehaviour {
 	public MissileController MissilePrefab;
 	public BarrelController Barrel;
 	public float FireStrength = 100;
+	PlanetController planet;
+
+	void Awake()
+	{
+		planet = GetComponentInParent<PlanetController>();
+	}
 	// Use this for initialization
 	void Start () {
 	
@@ -28,5 +34,11 @@ public class GunController : MonoBehaviour {
 		mc.transform.position = (Vector2)transform.position+direction.normalized*3;
 		mc.rigidbody2D.AddForce(direction*FireStrength,ForceMode2D.Impulse);
 		mc.SendMessage("OnFire", direction);
+		/*
+		RocketController rc = mc.GetComponent<RocketController>();
+		if(rc!=null)
+		{
+
+		}*/
 	}
 }

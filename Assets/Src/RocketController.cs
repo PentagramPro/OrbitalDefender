@@ -8,6 +8,7 @@ public class RocketController : MonoBehaviour {
 	public float Power = 100;
 	public Vector2 EnginePos;
 	public GameObject TrailEffect;
+	float BaseTorque = 0;
 
 	float CurTime = 0;
 	// Use this for initialization
@@ -21,7 +22,14 @@ public class RocketController : MonoBehaviour {
 		{
 			Vector2 pos = transform.TransformPoint(EnginePos);
 			Vector2 force = transform.TransformDirection(0,Power,0);
+
+
 			rigidbody2D.AddForceAtPosition(force,pos);
+
+
+
+			rigidbody2D.AddTorque(GetTorque());
+
 			CurTime+=Time.fixedDeltaTime;
 			if(CurTime>=MaxTime)
 			{
@@ -37,10 +45,25 @@ public class RocketController : MonoBehaviour {
 		float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg-90;
 		transform.rotation =  Quaternion.Euler(0,0,angle);
 		CurTime = 0;
+		BaseTorque = -direction.x;
 		state = Modes.Engine;
 
 	}
 
+	public float VelocityAngle
+	{
+		get{
+			Vector2 velocity = transform.InverseTransformDirection(rigidbody2D.velocity.normalized);
+			float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg-90;
+			return angle;
+		}
+	}
+	float GetTorque()
+	{
+
+		//return VelocityAngle*0.01f;
+		return BaseTorque;
+	}
 	void OnDrawGizmos()
 	{
 		Vector2 pos = transform.TransformPoint(EnginePos);
@@ -48,5 +71,8 @@ public class RocketController : MonoBehaviour {
 		Gizmos.DrawWireSphere(pos,1f);
 		Gizmos.color = Color.red;
 		Gizmos.DrawLine(pos,pos+force);
+
+		Gizmos.color = Color.green;
+		Gizmos.DrawLine(pos,pos+rigidbody2D.velocity);
 	}
 }
