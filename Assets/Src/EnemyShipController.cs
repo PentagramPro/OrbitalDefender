@@ -9,12 +9,11 @@ public class EnemyShipController : MonoBehaviour {
 	public FxRemover ExplosionsFx;
 
 	Modes state = Modes.Flying;
-	public Vector2 OrbitPoint;
+
 	public PlanetController Planet;
-	PointGravityController PointGravity;
-	Vector2 Direction;
-	float distanceToOrbit = 0;
-	public float FlySpeed = 100;
+	FlyController flyController;
+
+
 
 	float explosionCounter = 0;
 	public float ExplosionTime = 3;
@@ -22,15 +21,12 @@ public class EnemyShipController : MonoBehaviour {
 
 	void Awake()
 	{
-		PointGravity = GetComponent<PointGravityController>();
-
+	
+		flyController = GetComponent<FlyController>();
+		flyController.OnFlyingComplete+=OnFlyComplete;
 	}
 	// Use this for initialization
 	void Start () {
-		//PointGravity.enabled =false;
-		//rigidbody2D.isKinematic = true;
-		distanceToOrbit = ((Vector2)transform.position-OrbitPoint).magnitude;
-		Direction = OrbitPoint-(Vector2)(transform.position);
 		Planet.EnemyShips++;
 	}
 
@@ -68,24 +64,7 @@ public class EnemyShipController : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		if(state==Modes.Flying)
-		{
-			float newDist = ((Vector2)transform.position-OrbitPoint).magnitude;
-			if(newDist>distanceToOrbit)
-			{
-				state = Modes.Orbiting;
-				rigidbody2D.isKinematic = false;
-				PointGravity.enabled = true;
-				float toPlanet = (transform.position-Planet.transform.position).magnitude;
-				rigidbody2D.AddForce(Direction.normalized*Mathf.Sqrt(Planet.CalculateGravity(toPlanet)*toPlanet), ForceMode2D.Impulse);
-			}
-			else
-			{
-				transform.position+=(Vector3)(Direction.normalized*FlySpeed*Time.fixedDeltaTime);
-			}
-			distanceToOrbit = newDist;
-		}
-		else if(state==Modes.Exploding)
+		if(state==Modes.Exploding)
 		{
 			explosionCounter+=Time.fixedDeltaTime;
 			if(explosionCounter>ExplosionTime)
@@ -98,33 +77,36 @@ public class EnemyShipController : MonoBehaviour {
 		}
 	}
 
-	void OnDrawGizmos()
+	void OnFlyComplete()
 	{
-		Gizmos.color = Color.green;
-		Gizmos.DrawWireSphere(OrbitPoint, 0.5f);
-		Gizmos.DrawLine(OrbitPoint,OrbitPoint-Direction);
+		state = Modes.Orbiting;
 	}
 
 	public EnemyShipController PrefabInstantiate(PlanetController planet, Vector2 orbit, Vector2 position, bool immobile)
 	{
 		EnemyShipController ship = ((GameObject)Object.Instantiate(gameObject)).GetComponent<EnemyShipController>();
-		ship.PointGravity = ship.GetComponent<PointGravityController>();
+		FlyController fly = ship.GetComponent<FlyController>();
+		PointGravityController pgrav = ship.GetComponent<PointGravityController>();
+
 		if(immobile)
 		{
 			ship.state = Modes.Orbiting;
 			ship.rigidbody2D.isKinematic = false;
 			ship.transform.position = orbit;
-			ship.PointGravity.enabled =false;
+			fly.enabled = false;
+			pgrav.enabled = false;
 		}
 		else
 		{
 			ship.state = Modes.Flying;
-			ship.OrbitPoint = orbit;
+			fly.PrepareFly(orbit,planet);
+
 			ship.transform.position = position;
 		}
 
 
 		ship.Planet = planet;
+
 
 		return ship;
 	}
