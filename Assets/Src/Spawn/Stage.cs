@@ -70,6 +70,8 @@ public class Stage : MonoBehaviour {
 			if(Generator.Planet.EnemyShips==0)
 			{
 				Generator.OnStageComplete();
+				state = Modes.Done;
+				gameObject.SetActive(false);
 			}
 		}
 	}

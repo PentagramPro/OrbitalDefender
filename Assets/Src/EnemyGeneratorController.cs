@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class EnemyGeneratorController : MonoBehaviour {
 
+	public MessageController MsgController;
 
 	public PlanetController Planet;
 
@@ -45,26 +46,7 @@ public class EnemyGeneratorController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		/*counter+=Time.deltaTime;
-		elapsed+=Time.deltaTime;
-		if(counter>nextSpawn && Planet.EnemyShips<MaxShips)
-		{
-			if(elapsed<BigShipsTime)
-			{
-				Spawn(SmallShip1, MinOrbit,SmallOrbitRange,true);
-				counter = 0;
-				nextSpawn = Random.Range(5,10);
-			}
-			else
-			{
-				if(Random.Range(0,1)>0.7f)
-					Spawn(SmallShip1, MinOrbit,SmallOrbitRange,true);
-				else
-					Spawn(BigShip1, SmallOrbitRange,MaxOrbit,true);
-				counter = 0;
-				nextSpawn = Random.Range(5,10);
-			}
-		}*/
+
 	}
 
 
