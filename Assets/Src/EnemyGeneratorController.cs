@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class EnemyGeneratorController : MonoBehaviour {
 
-	public MessageController MsgController;
+	public UIController UI;
 
 	public PlanetController Planet;
 

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PlanetController : MonoBehaviour {
 
+	public UIController UI;
 
 	public float MaxGravity=35, MaxDistance=500;
 
@@ -26,5 +27,10 @@ public class PlanetController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	public void OnEnemyDestroyed(int score)
+	{
+		UI.AddScore(score);
 	}
 }

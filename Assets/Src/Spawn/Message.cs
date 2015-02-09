@@ -26,7 +26,7 @@ public class Message : MonoBehaviour, ISpawner {
 
 	public void NextSpawn ()
 	{
-		stage.Generator.MsgController.DisplayMessage(Text);
+		stage.Generator.UI.BigMessage = Text;
 		Debug.Log("Msg: "+Text);
 	}
 

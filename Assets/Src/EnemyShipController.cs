@@ -7,6 +7,7 @@ public class EnemyShipController : MonoBehaviour {
 		Flying,Orbiting,Exploding
 	}
 	public FxRemover ExplosionsFx;
+	public int Score = 10;
 
 	Modes state = Modes.Flying;
 
@@ -38,7 +39,7 @@ public class EnemyShipController : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D coll) 
 	{
-		if(coll.gameObject.tag=="Enemy")
+		if(coll.gameObject.tag=="Enemy" || coll.gameObject.tag=="Planet")
 		{
 			StartDestruction();
 		}
@@ -46,7 +47,7 @@ public class EnemyShipController : MonoBehaviour {
 
 	public void OnMissileCollision(MissileController missile)
 	{
-
+		Planet.OnEnemyDestroyed(Score);
 		StartDestruction();
 
 	}
