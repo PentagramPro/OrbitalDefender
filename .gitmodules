@@ -1,0 +1,3 @@
+[submodule "Assets/Src/UnityHelpers"]
+	path = Assets/Src/UnityHelpers
+	url = ../UnityHelpers.git

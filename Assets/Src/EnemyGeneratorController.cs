@@ -48,12 +48,25 @@ public class EnemyGeneratorController : MonoBehaviour {
 		
 
 	}
-
+	public void DoSpawnAsteroid(AsteroidController prefab, float low, float high)
+	{
+		
+		Vector2 orbit =  new Vector2(0,Random.Range(low,high)).Rotate(Random.Range(0,359));
+		Vector2 trace = new Vector2(orbit.y,-orbit.x).normalized*300;
+		
+		AsteroidController a = prefab.PrefabInstantiate(Planet, (Vector2)Planet.transform.position+orbit,(Vector2)Planet.transform.position+trace);
+		
+	}
 
 	public void DoSpawnEnemy(EnemyShipController prefab, float low, float high, bool immobile)
 	{
+		float angle = 0;
+		if(Random.Range(0f,1f)<0.5f)
+			angle = Random.Range(0f,150f);
+		else
+			angle = Random.Range(210f,359f);
 
-		Vector2 orbit =  new Vector2(0,Random.Range(low,high)).Rotate(Random.Range(0,359));
+		Vector2 orbit =  new Vector2(0,Random.Range(low,high)).Rotate(angle);
 		Vector2 trace = new Vector2(orbit.y,-orbit.x).normalized*300;
 
 		EnemyShipController ship = prefab.PrefabInstantiate(Planet, (Vector2)Planet.transform.position+orbit,(Vector2)Planet.transform.position+trace,immobile);
