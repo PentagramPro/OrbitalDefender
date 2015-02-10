@@ -7,8 +7,16 @@ public class EnemyShipController : MonoBehaviour {
 		Flying,Orbiting,Exploding
 	}
 	public FxRemover ExplosionsFx;
-	public int Score = 10;
+	public FireballController FireballPrefab;
 
+	public int Score = 10;
+	public float FirePeriod = 6;
+	public float FireDamage = 5;
+	public float FireImpulse = 5;
+
+	CameraController camController;
+
+	float fireCounter = 0;
 	Modes state = Modes.Flying;
 
 	public PlanetController Planet;
@@ -25,6 +33,7 @@ public class EnemyShipController : MonoBehaviour {
 	
 		flyController = GetComponent<FlyController>();
 		flyController.OnFlyingComplete+=OnFlyComplete;
+		camController = Camera.main.GetComponent<CameraController>();
 	}
 	// Use this for initialization
 	void Start () {
@@ -65,6 +74,7 @@ public class EnemyShipController : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
+
 		if(state==Modes.Exploding)
 		{
 			explosionCounter+=Time.fixedDeltaTime;
@@ -74,6 +84,25 @@ public class EnemyShipController : MonoBehaviour {
 				explosionObject.enabled = true;
 				explosionObject.particleSystem.Stop();
 				GameObject.Destroy(gameObject);
+			}
+		}
+		else
+		{
+			float dist = (transform.position-Planet.transform.position).magnitude;
+			if(dist>camController.MaxSize)
+				StartDestruction();
+
+			if(state==Modes.Orbiting)
+			{
+				fireCounter+=Time.fixedDeltaTime;
+				if(fireCounter>FirePeriod)
+				{
+					FireballController fireball = FireballPrefab.PrefabInstantiate();
+					fireball.Damage = FireDamage;
+					fireball.transform.position = transform.position;
+					fireball.rigidbody2D.AddForce(  (Planet.transform.position-transform.position).normalized*FireImpulse,ForceMode2D.Impulse);
+					fireCounter = Random.Range(0,FirePeriod*0.2f);
+				}
 			}
 		}
 	}

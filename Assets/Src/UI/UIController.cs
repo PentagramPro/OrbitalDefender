@@ -4,7 +4,7 @@ using System.Collections;
 public class UIController : MonoBehaviour {
 	public MessageController MsgController;
 	public NumericFieldController Score;
-
+	public HpBarController HpBar;
 
 	// Use this for initialization
 	void Start () {
