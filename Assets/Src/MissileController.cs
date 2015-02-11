@@ -5,6 +5,7 @@ public class MissileController : MonoBehaviour {
 
 	public GameObject ExplosionEffect;
 	public float Lifetime = 10;
+	public float Damage {get;set;}
 	float time = 0;
 	// Use this for initialization
 	void Start () {
