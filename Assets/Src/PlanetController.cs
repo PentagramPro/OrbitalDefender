@@ -6,16 +6,15 @@ public class PlanetController : MonoBehaviour {
 	public UIController UI;
 
 	public float MaxGravity=35, MaxDistance=500;
-	public float MaxHP = 100;
-	float curHP;
 
+	HullController hull;
 	public int EnemyShips{get;set;}
 
 	void Awake()
 	{
 		EnemyShips = 0;
-		curHP = MaxHP;
-		UI.HpBar.HP = MaxHP;
+		hull = GetComponent<HullController>();
+		UI.HpBar.HP = hull.MaxHp;
 	}
 	// Use this for initialization
 	void Start () {
@@ -23,10 +22,15 @@ public class PlanetController : MonoBehaviour {
 
 	}
 
-	void OnFireball(FireballController fireball) 
+	void OnHullDestroyed(float amount)
 	{
 
-		DamagePlanet(fireball.Damage);
+	}
+
+	void OnHullDamaged(float amount) 
+	{
+
+		UI.HpBar.HP = hull.Hp;
 
 	}
 
@@ -43,11 +47,5 @@ public class PlanetController : MonoBehaviour {
 	public void OnEnemyDestroyed(int score)
 	{
 		UI.AddScore(score);
-	}
-
-	public void DamagePlanet(float amount)
-	{
-		curHP-=amount;
-		UI.HpBar.HP = curHP;
 	}
 }

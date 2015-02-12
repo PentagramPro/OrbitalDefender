@@ -54,7 +54,13 @@ public class EnemyShipController : MonoBehaviour {
 		}
 	}
 
-	public void OnMissileCollision(MissileController missile)
+	void OnHullDamaged(float amount) 
+	{
+
+		
+	}
+
+	public void OnHullDestroyed(float amount)
 	{
 		Planet.OnEnemyDestroyed(Score);
 		StartDestruction();
