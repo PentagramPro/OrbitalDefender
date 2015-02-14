@@ -9,8 +9,20 @@ public class HullController : MonoBehaviour {
 	public bool DamagedByMissiles = true;
 	public bool DamagedByFireballs = false;
 
-	public int ShieldPower = 0;
+	public int InitialShieldPower = 0;
+
 	public ShieldFxController Shield;
+	int shieldPower = 0;
+
+	public int ShieldPower{
+		get{
+			return shieldPower;
+		}
+		set{
+			shieldPower = Mathf.Max(value,0);
+			Shield.ShieldEnabled = value>0;
+		}
+	}
 
 	void Awake()
 	{
@@ -18,8 +30,11 @@ public class HullController : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-		if(Shield!=null && ShieldPower>0)
-			Shield.ShieldEnabled = true;
+		if(Shield!=null)
+		{
+
+			ShieldPower = InitialShieldPower;
+		}
 	}
 	
 	// Update is called once per frame
@@ -50,7 +65,6 @@ public class HullController : MonoBehaviour {
 			ShieldPower--;
 			if(ShieldPower==0)
 			{
-				Shield.ShieldEnabled = false;
 				gameObject.SendMessage("OnShieldDestroyed", amount);
 			}
 		}

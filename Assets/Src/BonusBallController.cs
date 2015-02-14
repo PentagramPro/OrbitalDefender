@@ -14,6 +14,12 @@ public class BonusBallController : MonoBehaviour {
 	CountTime counter = new CountTime();
 
 
+	void Awake()
+	{
+		TrailRenderer tr = GetComponent<TrailRenderer>();
+		tr.sortingLayerName = "Ships";
+		tr.sortingOrder = 100;
+	}
 	// Use this for initialization
 	void Start () {
 	

@@ -58,13 +58,23 @@ public class EnemyGeneratorController : MonoBehaviour {
 		
 	}
 
-	public void DoSpawnEnemy(EnemyShipController prefab, float low, float high, bool immobile)
+	public void DoSpawnEnemy(EnemyShipController prefab, float low, float high, bool immobile, bool easy)
 	{
 		float angle = 0;
-		if(Random.Range(0f,1f)<0.5f)
-			angle = Random.Range(0f,150f);
+		if(easy==false)
+		{
+			if(Random.Range(0f,1f)<0.5f)
+				angle = Random.Range(0f,150f);
+			else
+				angle = Random.Range(210f,359f);
+		}
 		else
-			angle = Random.Range(210f,359f);
+		{
+			if(Random.Range(0f,1f)<0.5f)
+				angle = Random.Range(0f,90f);
+			else
+				angle = Random.Range(270,359f);
+		}
 
 		Vector2 orbit =  new Vector2(0,Random.Range(low,high)).Rotate(angle);
 		Vector2 trace = new Vector2(orbit.y,-orbit.x).normalized*300;

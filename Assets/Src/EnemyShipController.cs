@@ -136,7 +136,7 @@ public class EnemyShipController : MonoBehaviour {
 		{
 			ship.state = Modes.Orbiting;
 
-			ship.rigidbody2D.isKinematic = hull.ShieldPower>0;
+			ship.rigidbody2D.isKinematic = hull.InitialShieldPower>0;
 
 			ship.transform.position = orbit;
 			fly.enabled = false;

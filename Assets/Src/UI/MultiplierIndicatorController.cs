@@ -5,7 +5,9 @@ using System.Collections.Generic;
 public class MultiplierIndicatorController : MonoBehaviour {
 	Text text;
 	Animator animator;
-	int multiplier = 0;
+	int multiplier = 1;
+	public Animator BonusGlow;
+	public Color ShieldGlowColor;
 
 	void Awake()
 	{
@@ -23,6 +25,18 @@ public class MultiplierIndicatorController : MonoBehaviour {
 	
 	}
 
+	public void BonusEffect(Bonus b)
+	{
+		switch(b)
+		{
+		case Bonus.Shield:
+			var img = BonusGlow.GetComponent<Image>();
+			img.color = ShieldGlowColor;
+			BonusGlow.SetTrigger("Tick");
+			break;
+		}
+	}
+
 	public Vector3 WorldPosition{
 		get{
 			return Camera.main.ScreenToWorldPoint(transform.position);
@@ -30,7 +44,7 @@ public class MultiplierIndicatorController : MonoBehaviour {
 	}
 	public void ResetMultiplier()
 	{
-		multiplier = 0;
+		multiplier = 1;
 		UpdateText();
 	}
 

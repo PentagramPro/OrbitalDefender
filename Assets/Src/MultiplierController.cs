@@ -10,6 +10,8 @@ public class MultiplierController : MonoBehaviour {
 	Dictionary<int,Bonus> bonuses = new Dictionary<int, Bonus>();
 	PlanetController planet;
 
+	CountTime counter = new CountTime();
+
 	void Awake(){
 		planet = GetComponent<PlanetController>();
 		bonuses[2] = Bonus.Shield;
@@ -24,7 +26,11 @@ public class MultiplierController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(counter.Count(3))
+		{
+			counter.Reset();
+			ApplyBonus(Bonus.Shield);
+		}
 	}
 
 	void ApplyBonus(Bonus b)
@@ -36,6 +42,7 @@ public class MultiplierController : MonoBehaviour {
 			BonusBallPrefab.Instantiate(Indicator.WorldPosition,planet.transform,b);
 			break;
 		}
+		Indicator.BonusEffect(b);
 	}
 
 	public void AddMultiplier()

@@ -57,7 +57,10 @@ public class ShieldFxController : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-
+		if(ShieldEnabled==false)
+		{
+			ShieldAnimator.gameObject.SetActive(false);
+		}
 	}
 
 	bool UpdateCounter(float duration)
