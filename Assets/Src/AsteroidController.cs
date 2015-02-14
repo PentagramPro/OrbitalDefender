@@ -17,9 +17,15 @@ public class AsteroidController : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D coll) 
 	{
-		if(coll.gameObject.tag=="Enemy" || coll.gameObject.tag=="Planet")
+		if(coll.gameObject.tag=="Enemy")
 		{
 			GameObject.Destroy(gameObject);
+		}
+		else if( coll.gameObject.tag=="Planet")
+		{
+			GameObject.Destroy(gameObject);
+			PlanetController p = coll.gameObject.GetComponent<PlanetController>();
+			p.Multiplier.ResetMultiplier();
 		}
 	}
 

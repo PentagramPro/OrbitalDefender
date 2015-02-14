@@ -49,7 +49,10 @@ public class HullController : MonoBehaviour {
 		{
 			ShieldPower--;
 			if(ShieldPower==0)
+			{
 				Shield.ShieldEnabled = false;
+				gameObject.SendMessage("OnShieldDestroyed", amount);
+			}
 		}
 		else
 		{

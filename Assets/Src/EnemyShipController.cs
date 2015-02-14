@@ -21,7 +21,7 @@ public class EnemyShipController : MonoBehaviour {
 
 	public PlanetController Planet;
 	FlyController flyController;
-
+	HullController hull;
 
 
 	float explosionCounter = 0;
@@ -30,7 +30,7 @@ public class EnemyShipController : MonoBehaviour {
 
 	void Awake()
 	{
-	
+		hull = GetComponent<HullController>();
 		flyController = GetComponent<FlyController>();
 		flyController.OnFlyingComplete+=OnFlyComplete;
 		camController = Camera.main.GetComponent<CameraController>();
@@ -52,6 +52,12 @@ public class EnemyShipController : MonoBehaviour {
 		{
 			StartDestruction();
 		}
+	}
+
+	void OnShieldDestroyed(float amount)
+	{
+		if(state==Modes.Orbiting)
+			rigidbody2D.isKinematic = false;
 	}
 
 	void OnHullDamaged(float amount) 
@@ -116,6 +122,7 @@ public class EnemyShipController : MonoBehaviour {
 	void OnFlyComplete()
 	{
 		state = Modes.Orbiting;
+
 	}
 
 	public EnemyShipController PrefabInstantiate(PlanetController planet, Vector2 orbit, Vector2 position, bool immobile)
@@ -123,11 +130,14 @@ public class EnemyShipController : MonoBehaviour {
 		EnemyShipController ship = ((GameObject)Object.Instantiate(gameObject)).GetComponent<EnemyShipController>();
 		FlyController fly = ship.GetComponent<FlyController>();
 		PointGravityController pgrav = ship.GetComponent<PointGravityController>();
+		HullController hull = ship.GetComponent<HullController>();
 
 		if(immobile)
 		{
 			ship.state = Modes.Orbiting;
-			ship.rigidbody2D.isKinematic = false;
+
+			ship.rigidbody2D.isKinematic = hull.ShieldPower>0;
+
 			ship.transform.position = orbit;
 			fly.enabled = false;
 			pgrav.enabled = false;
