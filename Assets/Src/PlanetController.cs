@@ -7,6 +7,7 @@ public class PlanetController : MonoBehaviour {
 
 	public float MaxGravity=35, MaxDistance=500;
 	public int ShieldBonus = 3;
+	public float HpBonus = 30;
 
 	HullController hull;
 	public int EnemyShips{get;set;}
@@ -42,6 +43,11 @@ public class PlanetController : MonoBehaviour {
 		if(type==Bonus.Shield)
 		{
 			hull.ShieldPower = ShieldBonus;
+		}
+		else if(type==Bonus.Hp)
+		{
+			hull.AddHp(HpBonus);
+			UI.HpBar.HP = hull.Hp;
 		}
 	}
 

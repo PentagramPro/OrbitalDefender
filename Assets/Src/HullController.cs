@@ -42,6 +42,10 @@ public class HullController : MonoBehaviour {
 	
 	}
 
+	public void AddHp(float amount)
+	{
+		Hp = Mathf.Min(MaxHp,Hp+amount);
+	}
 	public void OnMissileCollision(MissileController missile)
 	{
 		if(!DamagedByMissiles)

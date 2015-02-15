@@ -36,7 +36,16 @@ public class HpBarController : MonoBehaviour {
 			}
 			else
 			{		
+				if(value>delayedHp)
+				{
+					state = Modes.Idle;
+					DamageIndicator.gameObject.SetActive(false);
+					delayedHp = value;
+				}
+				else
+				{
 
+				}
 			}
 			SetBar(HpIndicator,0,value);
 			hp = value;

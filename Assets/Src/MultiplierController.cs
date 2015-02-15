@@ -4,7 +4,8 @@ using System.Collections.Generic;
 public class MultiplierController : MonoBehaviour {
 
 
-	public BonusBallController BonusBallPrefab;
+	public BonusBallController ShieldBallPrefab;
+	public BonusBallController HpBallPrefab;
 
 	public MultiplierIndicatorController Indicator;
 	Dictionary<int,Bonus> bonuses = new Dictionary<int, Bonus>();
@@ -19,8 +20,9 @@ public class MultiplierController : MonoBehaviour {
 	}
 	void Awake(){
 		planet = GetComponent<PlanetController>();
-		bonuses[2] = Bonus.Shield;
+		bonuses[5] = Bonus.Shield;
 		bonuses[10] = Bonus.Shield;
+		bonuses[15] = Bonus.Hp;
 		bonuses[20] = Bonus.Shield;
 	}
 
@@ -40,13 +42,17 @@ public class MultiplierController : MonoBehaviour {
 
 	void ApplyBonus(Bonus b)
 	{
-
+		BonusBallController prefab = null;
 		switch(b)
 		{
 		case Bonus.Shield:
-			BonusBallPrefab.Instantiate(Indicator.WorldPosition,planet.transform,b);
+			prefab = ShieldBallPrefab;
+			break;
+		case Bonus.Hp:
+			prefab = HpBallPrefab;
 			break;
 		}
+		prefab.Instantiate(Indicator.WorldPosition,planet.transform,b);
 		Indicator.BonusEffect(b);
 	}
 
