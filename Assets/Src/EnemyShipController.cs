@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemyShipController : MonoBehaviour {
 
 	enum Modes{
-		Flying,Orbiting,Exploding
+		Appearing,Flying,Orbiting,Exploding
 	}
 	public FxRemover ExplosionsFx;
 	public FireballController FireballPrefab;
@@ -15,8 +15,9 @@ public class EnemyShipController : MonoBehaviour {
 	public float FireImpulse = 5;
 
 	CameraController camController;
+	CountTime counter = new CountTime();
 
-	float fireCounter = 0;
+	//float fireCounter = 0;
 	Modes state = Modes.Flying;
 
 	public PlanetController Planet;
@@ -24,9 +25,12 @@ public class EnemyShipController : MonoBehaviour {
 	HullController hull;
 
 
-	float explosionCounter = 0;
+	//float explosionCounter = 0;
+	public float AppearingTime = 3;
 	public float ExplosionTime = 3;
 	FxRemover explosionObject;
+
+
 
 	void Awake()
 	{
@@ -75,7 +79,7 @@ public class EnemyShipController : MonoBehaviour {
 
 	void StartDestruction()
 	{
-		explosionCounter = 0;
+		counter.Reset();
 		state = Modes.Exploding;
 		explosionObject = ((GameObject)GameObject.Instantiate(ExplosionsFx.gameObject)).GetComponent<FxRemover>();
 		
@@ -89,8 +93,8 @@ public class EnemyShipController : MonoBehaviour {
 
 		if(state==Modes.Exploding)
 		{
-			explosionCounter+=Time.fixedDeltaTime;
-			if(explosionCounter>ExplosionTime)
+
+			if(counter.Count(ExplosionTime))
 			{
 				explosionObject.transform.parent = null;
 				explosionObject.enabled = true;
@@ -106,14 +110,23 @@ public class EnemyShipController : MonoBehaviour {
 
 			if(state==Modes.Orbiting)
 			{
-				fireCounter+=Time.fixedDeltaTime;
-				if(fireCounter>FirePeriod)
+
+				if(counter.Count(FirePeriod))
 				{
 					FireballController fireball = FireballPrefab.PrefabInstantiate();
 					fireball.Damage = FireDamage;
 					fireball.transform.position = transform.position;
 					fireball.rigidbody2D.AddForce(  (Planet.transform.position-transform.position).normalized*FireImpulse,ForceMode2D.Impulse);
-					fireCounter = Random.Range(0,FirePeriod*0.2f);
+					counter.Reset(Random.Range(0,FirePeriod*0.2f));
+				}
+			}
+			else if(state==Modes.Appearing)
+			{
+				if(counter.Count(AppearingTime))
+				{
+					counter.Reset();
+					state = Modes.Orbiting;
+					collider2D.enabled = true;
 				}
 			}
 		}
@@ -131,16 +144,19 @@ public class EnemyShipController : MonoBehaviour {
 		FlyController fly = ship.GetComponent<FlyController>();
 		PointGravityController pgrav = ship.GetComponent<PointGravityController>();
 		HullController hull = ship.GetComponent<HullController>();
+		Animator anim = ship.GetComponent<Animator>();
 
 		if(immobile)
 		{
-			ship.state = Modes.Orbiting;
+			ship.state = Modes.Appearing;
 
 			ship.rigidbody2D.isKinematic = hull.InitialShieldPower>0;
 
 			ship.transform.position = orbit;
 			fly.enabled = false;
 			pgrav.enabled = false;
+			collider2D.enabled = false;
+			anim.SetTrigger("Appear");
 		}
 		else
 		{

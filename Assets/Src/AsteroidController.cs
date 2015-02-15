@@ -4,7 +4,7 @@ using System.Collections;
 public class AsteroidController : MonoBehaviour {
 
 
-
+	PlanetController planet;
 	// Use this for initialization
 	void Start () {
 	
@@ -31,7 +31,7 @@ public class AsteroidController : MonoBehaviour {
 
 	public void OnMissileCollision(MissileController missile)
 	{
-		
+		planet.Multiplier.ResetMultiplier();
 		GameObject.Destroy(gameObject);
 		
 	}
@@ -42,7 +42,7 @@ public class AsteroidController : MonoBehaviour {
 		FlyController fly = a.GetComponent<FlyController>();
 
 		a.transform.position = position;
-
+		a.planet = planet;
 		fly.PrepareFly(orbit,planet);
 		return a;
 	}

@@ -28,11 +28,11 @@ public class Stage : MonoBehaviour {
 		
 		}
 		state = Modes.Spawning;
-		if(Spawners.Count==0)
+		/*if(Spawners.Count==0)
 		{
 			gameObject.SetActive(false);
 			state = Modes.Done;
-		}
+		}*/
 
 	}
 
@@ -48,20 +48,27 @@ public class Stage : MonoBehaviour {
 			counter+=Time.deltaTime;
 			if(counter>nextSpawn && Generator.Planet.EnemyShips<MaxShips)
 			{
-				Spawners[curSpawner].NextSpawn();
-				alreadySpawned++;
-
-				if(alreadySpawned>=TotalShipsToSpawn)
+				if(Spawners.Count==0)
 				{
 					state = Modes.Check;
 				}
 				else
 				{
-					counter = 0;
-					nextSpawn = Random.Range(MinNextSpawn,MaxNextSpawn);
-					curSpawner++;
-					if(curSpawner>=Spawners.Count)
-						curSpawner = 0;
+					Spawners[curSpawner].NextSpawn();
+					alreadySpawned++;
+
+					if(alreadySpawned>=TotalShipsToSpawn)
+					{
+						state = Modes.Check;
+					}
+					else
+					{
+						counter = 0;
+						nextSpawn = Random.Range(MinNextSpawn,MaxNextSpawn);
+						curSpawner++;
+						if(curSpawner>=Spawners.Count)
+							curSpawner = 0;
+					}
 				}
 			}
 		}

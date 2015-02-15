@@ -30,7 +30,7 @@ public class MissileController : MonoBehaviour {
 		{
 			Destory();
 		}
-		else if(coll.gameObject.tag=="Enemy")
+		else if(coll.gameObject.tag=="Enemy" || coll.gameObject.tag=="Asteroid")
 		{
 			coll.gameObject.SendMessage("OnMissileCollision",this);
 			Destory();

@@ -12,6 +12,11 @@ public class MultiplierController : MonoBehaviour {
 
 	CountTime counter = new CountTime();
 
+	public int Value{
+		get{
+			return Indicator.Value;
+		}
+	}
 	void Awake(){
 		planet = GetComponent<PlanetController>();
 		bonuses[2] = Bonus.Shield;
@@ -26,11 +31,11 @@ public class MultiplierController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(counter.Count(3))
+		/*if(counter.Count(3))
 		{
 			counter.Reset();
 			ApplyBonus(Bonus.Shield);
-		}
+		}*/
 	}
 
 	void ApplyBonus(Bonus b)

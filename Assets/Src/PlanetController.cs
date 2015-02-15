@@ -69,7 +69,7 @@ public class PlanetController : MonoBehaviour {
 
 	public void OnEnemyDestroyed(int score)
 	{
-		UI.AddScore(score);
+		UI.AddScore(score*multiplier.Value);
 		multiplier.AddMultiplier();
 	}
 }

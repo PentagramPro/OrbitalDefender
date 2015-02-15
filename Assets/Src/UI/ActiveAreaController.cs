@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 
@@ -16,12 +17,18 @@ public class ActiveAreaController : MonoBehaviour, IDragHandler, IBeginDragHandl
 	Vector2 FireDirection;
 	RectTransform rt;
 	Modes state = Modes.Idle;
+	Canvas canvas;
 
+	void Awake()
+	{
+		canvas = GetComponentInParent<Canvas>();
+	}
 	// Use this for initialization
 	void Start () {
 		rt = GetComponent<RectTransform>();
 		TargetingArea.gameObject.SetActive(false);
 		DirIndicator.Visible = false;
+
 	}
 	
 	// Update is called once per frame
@@ -35,9 +42,10 @@ public class ActiveAreaController : MonoBehaviour, IDragHandler, IBeginDragHandl
 		if(TargetingArea!=null)
 		{
 			RectTransform rect = GetComponent<RectTransform>();
+			Canvas canvas = GetComponentInParent<Canvas>();
 			Vector3 pos = rect.position;
-			Gizmos.DrawWireSphere(pos,TargetingR);
-			Gizmos.DrawWireSphere(pos,ActiveR);
+			Gizmos.DrawWireSphere(pos,TargetingR*canvas.scaleFactor);
+			Gizmos.DrawWireSphere(pos,ActiveR*canvas.scaleFactor);
 		}
 	}
 	#region IDragHandler implementation
@@ -46,6 +54,9 @@ public class ActiveAreaController : MonoBehaviour, IDragHandler, IBeginDragHandl
 	{
 		if(state == Modes.Targeting)
 		{
+			float ar = ActiveR*canvas.scaleFactor;
+			float tr = TargetingR*canvas.scaleFactor;
+
 			Vector2 pt2 = eventData.position;
 
 			// pointer is limited to lower part of circle
@@ -54,16 +65,16 @@ public class ActiveAreaController : MonoBehaviour, IDragHandler, IBeginDragHandl
 
 			Vector2 rad = pt2 - (Vector2)rt.position;
 
-			if(rad.magnitude>TargetingR)
+			if(rad.magnitude>tr)
 			{
-				rad = Vector2.Lerp(rt.position,pt2,TargetingR/rad.magnitude)- (Vector2)rt.position;
+				rad = Vector2.Lerp(rt.position,pt2,tr/rad.magnitude)- (Vector2)rt.position;
 				pt2 = (Vector2)rt.position+rad;
 			}
 
-			if(rad.magnitude>ActiveR)
+			if(rad.magnitude>ar)
 			{
 				DirIndicator.Visible = true;
-				FireDirection = -rad/TargetingR;
+				FireDirection = -rad/tr;
 				DirIndicator.SetOrientation(rt.position,pt2);
 				Gun.OnMoveBarrel(FireDirection);
 
@@ -83,7 +94,7 @@ public class ActiveAreaController : MonoBehaviour, IDragHandler, IBeginDragHandl
 	public void OnBeginDrag (PointerEventData eventData)
 	{
 		Vector2 rad = eventData.position - (Vector2)rt.position;
-		if(rad.magnitude<ActiveR)
+		if(rad.magnitude<ActiveR*canvas.scaleFactor)
 		{
 			TargetingArea.gameObject.SetActive(true);
 			DirIndicator.Visible = true;

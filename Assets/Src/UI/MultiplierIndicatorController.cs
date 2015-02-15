@@ -25,6 +25,13 @@ public class MultiplierIndicatorController : MonoBehaviour {
 	
 	}
 
+	public int Value
+	{
+		get{
+			return multiplier;
+		}
+	}
+
 	public void BonusEffect(Bonus b)
 	{
 		switch(b)

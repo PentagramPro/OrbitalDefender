@@ -7,6 +7,7 @@ public class DirectionIndicatorController : MonoBehaviour {
 	Image image;
 	RectTransform rt;
 	public RectTransform Arrow;
+	Canvas canvas;
 
 	float fullH = 1;
 	// Use this for initialization
@@ -14,6 +15,7 @@ public class DirectionIndicatorController : MonoBehaviour {
 	{
 		rt = GetComponent<RectTransform>();
 		image = GetComponent<Image>();
+		canvas = GetComponentInParent<Canvas>();
 	}
 	void Start () {
 
@@ -33,13 +35,14 @@ public class DirectionIndicatorController : MonoBehaviour {
 	}
 	public void SetOrientation(Vector2 pt1, Vector2 pt2)
 	{
+
 		Vector2 dir = pt2-pt1;
 		rt.position = (pt1+pt2)/2;
 		float a = Vector2.Angle(dir,new Vector2(-1,0))-90;
 		rt.rotation = Quaternion.Euler(0,0,a);
-		rt.localScale = new Vector2(1,dir.magnitude/fullH);
+		rt.localScale = new Vector2(1,dir.magnitude/fullH/canvas.scaleFactor);
 
-		Arrow.position = pt1+(-dir).normalized*10;
+		Arrow.position = pt1+(-dir).normalized*120*canvas.scaleFactor;
 		Arrow.rotation = Quaternion.Euler(0,0,a+90);
 		//Debug.Log("New:"+rt.rotation.eulerAngles);
 	}
