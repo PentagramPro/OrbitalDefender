@@ -13,6 +13,7 @@ public class EnemyShipController : MonoBehaviour {
 	public float FirePeriod = 6;
 	public float FireDamage = 5;
 	public float FireImpulse = 5;
+	public float FireAnimationShift = 0.5f;
 
 	CameraController camController;
 	CountTime counter = new CountTime();
@@ -23,12 +24,14 @@ public class EnemyShipController : MonoBehaviour {
 	public PlanetController Planet;
 	FlyController flyController;
 	HullController hull;
+	Animator animator;
 
 
 	//float explosionCounter = 0;
 	public float AppearingTime = 3;
 	public float ExplosionTime = 3;
 	FxRemover explosionObject;
+	bool fireAnimationTriggered = false;
 
 
 
@@ -38,6 +41,7 @@ public class EnemyShipController : MonoBehaviour {
 		flyController = GetComponent<FlyController>();
 		flyController.OnFlyingComplete+=OnFlyComplete;
 		camController = Camera.main.GetComponent<CameraController>();
+		animator = GetComponent<Animator>();
 	}
 	// Use this for initialization
 	void Start () {
@@ -110,7 +114,11 @@ public class EnemyShipController : MonoBehaviour {
 
 			if(state==Modes.Orbiting)
 			{
-
+				if(!fireAnimationTriggered && counter.Count(FirePeriod-FireAnimationShift))
+				{
+					animator.SetTrigger("Fire");
+					fireAnimationTriggered = true;
+				}
 				if(counter.Count(FirePeriod))
 				{
 					FireballController fireball = FireballPrefab.PrefabInstantiate();
@@ -118,6 +126,7 @@ public class EnemyShipController : MonoBehaviour {
 					fireball.transform.position = transform.position;
 					fireball.rigidbody2D.AddForce(  (Planet.transform.position-transform.position).normalized*FireImpulse,ForceMode2D.Impulse);
 					counter.Reset(Random.Range(0,FirePeriod*0.2f));
+					fireAnimationTriggered= false;
 				}
 			}
 			else if(state==Modes.Appearing)

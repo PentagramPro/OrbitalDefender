@@ -32,6 +32,11 @@ public class PlanetController : MonoBehaviour {
 
 	}
 
+	public void OnMissileCollision(MissileController missile)
+	{
+		Multiplier.ResetMultiplier();
+	}
+
 	void OnBonus(Bonus type)
 	{
 		if(type==Bonus.Shield)

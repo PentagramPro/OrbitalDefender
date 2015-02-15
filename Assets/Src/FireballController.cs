@@ -14,12 +14,20 @@ public class FireballController : MonoBehaviour {
 	
 	}
 
+	public void OnMissileCollision(MissileController missile)
+	{
+		GameObject.Destroy(gameObject);
+	}
+
 	void OnCollisionEnter2D(Collision2D coll) 
 	{
 		if(coll.gameObject.tag=="Fireball")
 			return;
-		GameObject.Destroy(gameObject);
-		coll.gameObject.SendMessage("OnFireball",this);
+		else
+		{
+			coll.gameObject.SendMessage("OnFireball",this);
+			GameObject.Destroy(gameObject);
+		}
 	}
 
 	public FireballController PrefabInstantiate()

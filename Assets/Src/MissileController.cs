@@ -26,11 +26,8 @@ public class MissileController : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D coll) 
 	{
-		if(coll.gameObject.tag=="Planet" || coll.gameObject.tag=="Fireball" )
-		{
-			Destory();
-		}
-		else if(coll.gameObject.tag=="Enemy" || coll.gameObject.tag=="Asteroid")
+
+		if(coll.gameObject.tag=="Enemy" || coll.gameObject.tag=="Asteroid" || coll.gameObject.tag=="Planet" ||coll.gameObject.tag=="Fireball" )
 		{
 			coll.gameObject.SendMessage("OnMissileCollision",this);
 			Destory();
