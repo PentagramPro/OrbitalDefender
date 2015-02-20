@@ -18,7 +18,7 @@ public class MenuController : MonoBehaviour {
 	{
 		Debug.Log("Resuming");
 		parameter = MenuParameter.Resume;
-		LevelSerializer.Resume();
+		//LevelSerializer.Resume();
 	}
 
 	public void OnExitToMenu()
