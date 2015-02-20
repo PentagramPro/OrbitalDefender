@@ -28,6 +28,13 @@ public class UIController : MonoBehaviour {
 
 	}
 
+	void OnApplicationPause()
+	{
+		Debug.Log("Saving");
+		//LevelSerializer.Checkpoint();
+
+	}
+
 	public void OnContinuePlaying()
 	{
 		if(state==Modes.Menu)
