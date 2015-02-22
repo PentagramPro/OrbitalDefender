@@ -17,6 +17,12 @@ public class StringReaderEx : StringReader
 	{
 
 	}
+
+	public float ReadLineFloat()
+	{
+		return float.Parse(ReadLine());
+	}
+
 	public Vector3 ReadLineVector3()
 	{
 		string line = ReadLine();
@@ -30,7 +36,26 @@ public class StringReaderEx : StringReader
 
 	public int ReadLineInt()
 	{
-		return Convert.ToInt32(ReadLine());
+		string line = ReadLine();
+		try
+		{
+			return Convert.ToInt32(line);
+		}
+		catch (Exception e)
+		{
+			Debug.LogError("Integer format error while reading: "+line);
+			throw new UnityException("Load error");
+		}
+	}
+
+	public bool ReadLineBool()
+	{
+		return bool.Parse(ReadLine());
+	}
+
+	public T ReadLineEnum<T>()
+	{
+		return (T)Enum.Parse(typeof(T),ReadLine());
 	}
 }
 

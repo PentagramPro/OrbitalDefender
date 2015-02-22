@@ -19,6 +19,11 @@ public class StringWriterEx : StringWriter
 		Debug.Log(line);
 		WriteLine(line);
 	}
+
+	public void WriteLineEnum<T>(T value)
+	{
+		WriteLine(Enum.GetName(typeof(T),value));
+	}
 }
 
 

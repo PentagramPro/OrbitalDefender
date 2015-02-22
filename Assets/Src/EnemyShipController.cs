@@ -13,12 +13,14 @@ public class EnemyShipController : MonoBehaviour {
 	public float FirePeriod = 6;
 	public float FireDamage = 5;
 	public float FireImpulse = 5;
+
 	public float FireAnimationShift = 0.5f;
 
 	CameraController camController;
 	CountTime counter = new CountTime();
 
 	//float fireCounter = 0;
+	[StoreThis]
 	Modes state = Modes.Flying;
 
 	public PlanetController Planet;

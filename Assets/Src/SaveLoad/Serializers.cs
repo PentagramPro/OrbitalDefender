@@ -15,8 +15,12 @@ public class StoreBase
 	static Dictionary<Type,StoreBase> Serializers = new Dictionary<Type, StoreBase>()
 	{
 		{typeof(int),new StoreInt()},
+		{typeof(float), new StoreFloat()},
 		{typeof(string), new StoreString()}
+
 	};
+
+	static StoreBase EnumSerializer = new StoreEnum();
 
 	protected virtual string Save(object obj)
 	{
@@ -29,6 +33,10 @@ public class StoreBase
 
 	public static string SaveField(FieldInfo field, object o)
 	{
+
+		if(field.FieldType.IsEnum)
+			return EnumSerializer.Save(field.GetValue(o));
+
 		if(Serializers.ContainsKey(field.FieldType))
 			return Serializers[field.FieldType].Save(field.GetValue(o));
 		return "";
@@ -36,7 +44,9 @@ public class StoreBase
 
 	public static void LoadField(FieldInfo f, object o, string val)
 	{
-		if(Serializers.ContainsKey(f.FieldType))
+		if(f.FieldType.IsEnum)
+			f.SetValue(o,EnumSerializer.Load(val));
+		else if(Serializers.ContainsKey(f.FieldType))
 			f.SetValue(o,Serializers[f.FieldType].Load(val));
 	}
 
@@ -71,3 +81,35 @@ public class StoreInt : StoreBase
 	#endregion
 }
 
+public class StoreFloat : StoreBase
+{
+	#region implemented abstract members of StoreBase
+
+	protected override object Load ( string val)
+	{
+		return float.Parse(val);
+	}
+	
+	#endregion
+}
+
+
+public class StoreEnum : StoreBase
+{
+	protected override object Load (string val)
+	{
+		int pos = val.LastIndexOf(' ');
+		String typeName = val.Substring(0,pos);
+
+		String valName = val.Substring(pos+1,val.Length-pos-1);
+
+		Type t = Type.GetType(typeName);
+		return Enum.Parse(t,valName);
+
+	}
+
+	protected override string Save (object obj)
+	{
+		return obj.GetType().AssemblyQualifiedName+" "+Enum.GetName(obj.GetType(),obj);
+	}
+}
