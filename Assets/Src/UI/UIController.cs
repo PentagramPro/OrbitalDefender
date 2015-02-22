@@ -28,6 +28,11 @@ public class UIController : MonoBehaviour {
 
 	}
 
+	public void SaveGame()
+
+	{
+		SaveLoad.Checkpoint();
+	}
 	void OnApplicationPause()
 	{
 		Debug.Log("Saving");

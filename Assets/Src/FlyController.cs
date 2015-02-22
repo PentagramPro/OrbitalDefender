@@ -17,7 +17,7 @@ public class FlyController : MonoBehaviour {
 	void Awake()
 	{
 		PointGravity = GetComponent<PointGravityController>();
-		
+		Planet = GameObject.FindGameObjectWithTag("Planet").GetComponent<PlanetController>();
 	}
 
 	// Use this for initialization

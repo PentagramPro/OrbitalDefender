@@ -33,7 +33,7 @@ public class EnemyShipController : MonoBehaviour {
 	FxRemover explosionObject;
 	bool fireAnimationTriggered = false;
 
-
+	public string PrefabName{get;set;}
 
 	void Awake()
 	{
@@ -45,6 +45,8 @@ public class EnemyShipController : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
+		if(Planet==null)
+			Planet = GameObject.FindGameObjectWithTag("Planet").GetComponent<PlanetController>();
 		Planet.EnemyShips++;
 	}
 
@@ -155,6 +157,7 @@ public class EnemyShipController : MonoBehaviour {
 		HullController hull = ship.GetComponent<HullController>();
 		Animator anim = ship.GetComponent<Animator>();
 
+		ship.PrefabName = name;
 		if(immobile)
 		{
 			ship.state = Modes.Appearing;
