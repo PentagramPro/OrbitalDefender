@@ -17,6 +17,12 @@ public class SaveLoad : MonoBehaviour {
 
 	void Update()
 	{
+		if(!PlayerPrefs.HasKey(CheckpointName))
+		{
+			GameObject.Destroy(gameObject);
+			return;
+		}
+
 		try
 		{
 			StringReaderEx str = new StringReaderEx(PlayerPrefs.GetString(CheckpointName));

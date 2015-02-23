@@ -3,8 +3,17 @@ using System.Collections;
 
 public class HullController : MonoBehaviour {
 
+	[StoreThis]
 	public float MaxHp = 10;
-	public float Hp{get;internal set;}
+
+	[StoreThis]
+	float hp;
+
+	public float Hp{
+	get{
+			return hp;
+		}
+	}
 
 	public bool DamagedByMissiles = true;
 	public bool DamagedByFireballs = false;
@@ -12,6 +21,8 @@ public class HullController : MonoBehaviour {
 	public int InitialShieldPower = 0;
 
 	public ShieldFxController Shield;
+
+	[StoreThis]
 	int shieldPower = 0;
 
 	public int ShieldPower{
@@ -24,9 +35,15 @@ public class HullController : MonoBehaviour {
 		}
 	}
 
+	[ExecuteAfterLoad]
+	void OnDeserialized()
+	{
+		ShieldPower = shieldPower;
+	}
+
 	void Awake()
 	{
-		Hp = MaxHp;
+		hp = MaxHp;
 	}
 	// Use this for initialization
 	void Start () {
@@ -44,7 +61,7 @@ public class HullController : MonoBehaviour {
 
 	public void AddHp(float amount)
 	{
-		Hp = Mathf.Min(MaxHp,Hp+amount);
+		hp = Mathf.Min(MaxHp,Hp+amount);
 	}
 	public void OnMissileCollision(MissileController missile)
 	{
@@ -74,10 +91,10 @@ public class HullController : MonoBehaviour {
 		}
 		else
 		{
-			Hp-=amount;
-			if(Hp<=0)
+			hp-=amount;
+			if(hp<=0)
 			{
-				Hp=0;
+				hp=0;
 				gameObject.SendMessage("OnHullDestroyed", amount);
 			}
 			else
