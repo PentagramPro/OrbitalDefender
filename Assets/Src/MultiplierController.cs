@@ -11,7 +11,7 @@ public class MultiplierController : MonoBehaviour {
 	Dictionary<int,Bonus> bonuses = new Dictionary<int, Bonus>();
 	PlanetController planet;
 
-	CountTime counter = new CountTime();
+	//CountTime counter = new CountTime();
 
 	public int Value{
 		get{

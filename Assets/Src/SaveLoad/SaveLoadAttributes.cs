@@ -18,4 +18,13 @@ public class StoreThis : Attribute
 	}
 }
 
+[AttributeUsage(AttributeTargets.Method)]
+public class ExecuteAfterLoad : Attribute
+{
+	public ExecuteAfterLoad()
+	{
+		
+	}
+}
+
 

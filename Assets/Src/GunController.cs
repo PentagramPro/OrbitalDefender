@@ -7,11 +7,11 @@ public class GunController : MonoBehaviour {
 	public BarrelController Barrel;
 	public float FireStrength = 100;
 	public float Damage = 10;
-	PlanetController planet;
+	//PlanetController planet;
 
 	void Awake()
 	{
-		planet = GetComponentInParent<PlanetController>();
+		//planet = GetComponentInParent<PlanetController>();
 	}
 	// Use this for initialization
 	void Start () {

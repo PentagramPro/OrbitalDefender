@@ -7,11 +7,20 @@ public class HpBarController : MonoBehaviour {
 	enum Modes {Idle,DmgDelay, DmgContract}
 	public RectTransform HpIndicator, DamageIndicator;
 	RectTransform barBase;
+
+	[StoreThis]
 	Modes state = Modes.Idle;
 
+	[StoreThis]
 	float hp;
+
+	[StoreThis]
 	float maxHp = 0;
+
+	[StoreThis]
 	float counter = 0;
+
+	[StoreThis]
 	float delayedHp = 0;
 
 
@@ -62,9 +71,19 @@ public class HpBarController : MonoBehaviour {
 	void Start () {
 		maxHp = hp;
 		delayedHp = maxHp;
-		SetBar(HpIndicator,0,maxHp);
+		SetBar(HpIndicator,0,hp);
 	}
-	
+
+	[ExecuteAfterLoad]
+	void OnDeserialized()
+	{
+		Debug.Log("Hp bar is loaded. hp="+hp+", maxhp="+maxHp+", delayedHp="+delayedHp);
+		SetBar(HpIndicator,0,hp);
+
+		DamageIndicator.gameObject.SetActive(state!=Modes.Idle);
+
+	}
+
 	// Update is called once per frame
 	void FixedUpdate () {
 		switch(state)

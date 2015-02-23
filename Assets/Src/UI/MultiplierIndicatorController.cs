@@ -5,7 +5,11 @@ using System.Collections.Generic;
 public class MultiplierIndicatorController : MonoBehaviour {
 	Text text;
 	Animator animator;
+
+	[StoreThis]
 	int multiplier = 1;
+
+
 	public Animator BonusGlow;
 	public Color ShieldGlowColor;
 
@@ -17,6 +21,12 @@ public class MultiplierIndicatorController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		UpdateText();
+	}
+
+	[ExecuteAfterLoad]
+	void OnDeserialized()
+	{
 		UpdateText();
 	}
 	

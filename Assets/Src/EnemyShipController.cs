@@ -17,6 +17,8 @@ public class EnemyShipController : MonoBehaviour {
 	public float FireAnimationShift = 0.5f;
 
 	CameraController camController;
+
+	[StoreThis]
 	CountTime counter = new CountTime();
 
 	//float fireCounter = 0;

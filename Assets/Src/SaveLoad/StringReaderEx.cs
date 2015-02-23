@@ -43,7 +43,7 @@ public class StringReaderEx : StringReader
 		}
 		catch (Exception e)
 		{
-			Debug.LogError("Integer format error while reading: "+line);
+			Debug.LogError("Integer format error while reading: "+line+" "+e.Message);
 			throw new UnityException("Load error");
 		}
 	}

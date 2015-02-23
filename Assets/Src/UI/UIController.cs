@@ -15,6 +15,7 @@ public class UIController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Menu.gameObject.SetActive(false);
+		Time.timeScale = 1;
 	}
 	
 	// Update is called once per frame

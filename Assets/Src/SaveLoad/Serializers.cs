@@ -16,7 +16,8 @@ public class StoreBase
 	{
 		{typeof(int),new StoreInt()},
 		{typeof(float), new StoreFloat()},
-		{typeof(string), new StoreString()}
+		{typeof(string), new StoreString()},
+		{typeof(CountTime), new StoreCountTime()}
 
 	};
 
@@ -111,5 +112,20 @@ public class StoreEnum : StoreBase
 	protected override string Save (object obj)
 	{
 		return obj.GetType().AssemblyQualifiedName+" "+Enum.GetName(obj.GetType(),obj);
+	}
+}
+
+public class StoreCountTime : StoreBase
+{
+	protected override object Load (string val)
+	{
+		return new CountTime(float.Parse(val));
+		
+	}
+	
+	protected override string Save (object obj)
+	{
+		CountTime t = obj as CountTime;
+		return t.Counter.ToString();
 	}
 }

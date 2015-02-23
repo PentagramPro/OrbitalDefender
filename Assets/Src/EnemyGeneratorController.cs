@@ -54,7 +54,7 @@ public class EnemyGeneratorController : MonoBehaviour {
 		Vector2 orbit =  new Vector2(0,Random.Range(low,high)).Rotate(Random.Range(0,359));
 		Vector2 trace = new Vector2(orbit.y,-orbit.x).normalized*300;
 		
-		AsteroidController a = prefab.PrefabInstantiate(Planet, (Vector2)Planet.transform.position+orbit,(Vector2)Planet.transform.position+trace);
+		prefab.PrefabInstantiate(Planet, (Vector2)Planet.transform.position+orbit,(Vector2)Planet.transform.position+trace);
 		
 	}
 
