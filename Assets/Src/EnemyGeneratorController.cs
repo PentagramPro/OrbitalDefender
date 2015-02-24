@@ -8,6 +8,8 @@ public class EnemyGeneratorController : MonoBehaviour {
 	public PlanetController Planet;
 
 	Stage[] stages;
+
+	[StoreThis]
 	int curStage = 0;
 
 	void Awake()

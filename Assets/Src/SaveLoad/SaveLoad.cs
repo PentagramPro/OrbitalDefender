@@ -55,6 +55,18 @@ public class SaveLoad : MonoBehaviour {
 			ObjectSerializer.LoadComponent(str,ui.Score);
 			ObjectSerializer.LoadComponent(str,planet.Multiplier.Indicator);
 
+			EnemyGeneratorController eg = GameObject.Find("EnemyGenerator").GetComponent<EnemyGeneratorController>();
+
+			ObjectSerializer.LoadComponent(str,eg);
+			Stage[] stages = eg.GetComponentsInChildren<Stage>();
+
+			foreach(Stage s in stages)
+			{
+				ObjectSerializer.LoadObject(str,s.gameObject);
+			}
+
+
+
 		}
 		catch (Exception e)
 		{
@@ -107,6 +119,15 @@ public class SaveLoad : MonoBehaviour {
 		ObjectSerializer.StoreComponent(str,ui.Score);
 		ObjectSerializer.StoreComponent(str,planet.Multiplier.Indicator);
 
+		EnemyGeneratorController eg = GameObject.Find("EnemyGenerator").GetComponent<EnemyGeneratorController>();
+		
+		ObjectSerializer.StoreComponent(str,eg);
+		Stage[] stages = eg.GetComponentsInChildren<Stage>();
+		
+		foreach(Stage s in stages)
+		{
+			ObjectSerializer.StoreObject(str,s.gameObject);
+		}
 
 /*
 		StreamWriter log = new StreamWriter("g:/unity-dev/OrbitalDefender/log.txt",false);

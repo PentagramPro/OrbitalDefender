@@ -6,11 +6,22 @@ public class Stage : MonoBehaviour {
 	public float MinNextSpawn = 5, MaxNextSpawn=10;
 	public int MaxShips=5;
 	public int TotalShipsToSpawn = 10;
+
+	[StoreThis]
 	float nextSpawn = 1;
+
+	[StoreThis]
 	float counter = 0;
+
+	[StoreThis]
 	int curSpawner = 0;
+
+	[StoreThis]
 	int alreadySpawned = 0;
+
 	List<ISpawner> Spawners = new List<ISpawner>();
+
+	[StoreThis]
 	Modes state = Modes.Off;
 
 	public EnemyGeneratorController Generator {get;internal set;}
@@ -20,13 +31,7 @@ public class Stage : MonoBehaviour {
 
 		gameObject.SetActive(true);
 
-		Component[] comps = GetComponents<Component>();
-		foreach(Component c in comps)
-		{
-			if(c is ISpawner)
-				Spawners.Add(c as ISpawner);
-		
-		}
+
 		state = Modes.Spawning;
 		/*if(Spawners.Count==0)
 		{
@@ -34,6 +39,17 @@ public class Stage : MonoBehaviour {
 			state = Modes.Done;
 		}*/
 
+	}
+
+	void Awake()
+	{
+		Component[] comps = GetComponents<Component>();
+		foreach(Component c in comps)
+		{
+			if(c is ISpawner)
+				Spawners.Add(c as ISpawner);
+			
+		}
 	}
 
 	// Use this for initialization
