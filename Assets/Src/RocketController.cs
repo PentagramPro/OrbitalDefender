@@ -7,13 +7,13 @@ public class RocketController : MonoBehaviour {
 	public float MaxTime = 4;
 	public float Power = 100;
 	public Vector2 EnginePos;
-	public GameObject TrailEffect;
+	MissileController missile;
 	float BaseTorque = 0;
 
 	float CurTime = 0;
 	// Use this for initialization
 	void Start () {
-	
+		missile = GetComponent<MissileController>();
 	}
 	
 	// Update is called once per frame
@@ -34,7 +34,8 @@ public class RocketController : MonoBehaviour {
 			if(CurTime>=MaxTime)
 			{
 				state = Modes.Fly;
-				TrailEffect.SetActive(false);
+				//TrailEffect.SetActive(false);
+				missile.DetachTrail();
 			}
 		}
 	}

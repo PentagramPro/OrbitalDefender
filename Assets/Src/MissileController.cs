@@ -3,6 +3,7 @@ using System.Collections;
 
 public class MissileController : MonoBehaviour {
 
+	public FxRemover TrailEffect;
 	public GameObject ExplosionEffect;
 	public float Lifetime = 10;
 	public float Damage {get;set;}
@@ -35,9 +36,24 @@ public class MissileController : MonoBehaviour {
 		}
 	}
 
+	public void DetachTrail()
+	{
+		if(TrailEffect!=null)
+		{
+			TrailEffect.transform.parent = null;
+			TrailEffect.enabled = true;
+			ParticleSystem ps = TrailEffect.GetComponent<ParticleSystem>();
+			if(ps!=null)
+				ps.Stop();
+		}
+	}
+
 	void Destory()
 	{
+		DetachTrail();
+
 		GameObject.Instantiate(ExplosionEffect,transform.position,Quaternion.identity);
 		GameObject.Destroy(gameObject);
+
 	}
 }

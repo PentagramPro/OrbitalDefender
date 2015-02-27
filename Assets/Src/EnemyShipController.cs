@@ -92,7 +92,8 @@ public class EnemyShipController : MonoBehaviour {
 		counter.Reset();
 		state = Modes.Exploding;
 		explosionObject = ((GameObject)GameObject.Instantiate(ExplosionsFx.gameObject)).GetComponent<FxRemover>();
-		
+		animator.SetTrigger("Explode");
+
 		explosionObject.transform.parent = transform;
 		explosionObject.transform.localPosition = Vector2.zero;
 		explosionObject.enabled = false;
