@@ -5,6 +5,7 @@ public class SpawnEnemy : SpawnBase, ISpawner {
 
 	public EnemyShipController EnemyPrefab;
 	public bool Easy = false;
+	public bool Immobile = true;
 
 	// Use this for initialization
 	void Start () {
@@ -23,7 +24,7 @@ public class SpawnEnemy : SpawnBase, ISpawner {
 
 	public void NextSpawn ()
 	{
-		stage.Generator.DoSpawnEnemy(EnemyPrefab,MinOrbit,MaxOrbit,true,Easy);
+		stage.Generator.DoSpawnEnemy(EnemyPrefab,MinOrbit,MaxOrbit,Immobile,Easy);
 	}
 
 	#endregion

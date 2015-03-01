@@ -18,6 +18,7 @@ public class EnemyShipController : MonoBehaviour {
 
 	CameraController camController;
 
+
 	[StoreThis]
 	CountTime counter = new CountTime();
 
@@ -51,13 +52,14 @@ public class EnemyShipController : MonoBehaviour {
 	void Start () {
 		if(Planet==null)
 			Planet = GameObject.FindGameObjectWithTag("Planet").GetComponent<PlanetController>();
-		Planet.EnemyShips++;
+		if(state!=Modes.Exploding)
+			Planet.EnemyShips++;
 	}
 
 
 	void OnDestroy()
 	{
-		Planet.EnemyShips--;
+
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) 
@@ -97,6 +99,7 @@ public class EnemyShipController : MonoBehaviour {
 		explosionObject.transform.parent = transform;
 		explosionObject.transform.localPosition = Vector2.zero;
 		explosionObject.enabled = false;
+		Planet.EnemyShips--;
 	}
 
 	// Update is called once per frame
