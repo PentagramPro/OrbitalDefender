@@ -2,13 +2,16 @@
 using System.Collections;
 
 public class UIController : MonoBehaviour {
+	public static string RecordPrefName = "ScoreRecord";
 
-	enum Modes {Playing, Menu}
+	enum Modes {Playing, Menu, Gameover}
 	public MessageController MsgController;
 	public NumericFieldController Score;
 	public HpBarController HpBar;
 
 	public MenuController Menu;
+	public GameoverMenu Gameover;
+	public ActiveAreaController ActiveArea;
 
 	Modes state = Modes.Playing;
 
@@ -27,6 +30,21 @@ public class UIController : MonoBehaviour {
 			Menu.gameObject.SetActive(true);
 		}
 
+	}
+
+	public void OnGameOver()
+	{
+		state = Modes.Gameover;
+		//Time.timeScale = 0;
+		Gameover.gameObject.SetActive(true);
+
+		int record = PlayerPrefs.GetInt(RecordPrefName);
+		int score = Score.Value;
+
+		Gameover.SetScore(score,record);
+
+		if(score>record)
+			PlayerPrefs.SetInt(RecordPrefName,score);
 	}
 
 	public void SaveGame()

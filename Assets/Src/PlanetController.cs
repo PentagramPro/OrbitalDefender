@@ -10,6 +10,7 @@ public class PlanetController : MonoBehaviour {
 	public float HpBonus = 30;
 
 	HullController hull;
+	GunController gun;
 	public int EnemyShips{get;set;}
 
 	MultiplierController multiplier;
@@ -25,6 +26,7 @@ public class PlanetController : MonoBehaviour {
 		EnemyShips = 0;
 		hull = GetComponent<HullController>();
 		multiplier = GetComponent<MultiplierController>();
+		gun = GetComponentInChildren<GunController>();
 		UI.HpBar.HP = hull.MaxHp;
 	}
 	// Use this for initialization
@@ -58,6 +60,8 @@ public class PlanetController : MonoBehaviour {
 
 	void OnHullDestroyed(float amount)
 	{
+		UI.ActiveArea.gameObject.SetActive(false);
+		UI.OnGameOver();
 
 	}
 
