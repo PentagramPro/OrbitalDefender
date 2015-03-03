@@ -60,8 +60,12 @@ public class PlanetController : MonoBehaviour {
 
 	void OnHullDestroyed(float amount)
 	{
-		UI.ActiveArea.gameObject.SetActive(false);
-		UI.OnGameOver();
+		if(this.enabled)
+		{
+			UI.ActiveArea.gameObject.SetActive(false);
+			UI.OnGameOver();
+			this.enabled = false;
+		}
 
 	}
 
