@@ -11,10 +11,14 @@ public class CameraController : MonoBehaviour {
 	void Start () {
 		camera.orthographicSize = MinSize;
 		targetSize = MinSize;
+
 	}
+
+
 	
 	// Update is called once per frame
 	void Update () {
+
 		if(targetSize!=camera.orthographicSize)
 		{
 			if(targetSize>camera.orthographicSize)
@@ -34,7 +38,12 @@ public class CameraController : MonoBehaviour {
 
 	public void OnChangeZoom(float val)
 	{
-		targetSize = MinSize+(MaxSize-MinSize)*val;
+		float w =  camera.orthographicSize*camera.aspect;
+		float h =  camera.orthographicSize;
+		float calcMax = MaxSize;
+		if(w<h)
+			calcMax+=h-w;
+		targetSize = MinSize+(calcMax-MinSize)*val;
 	}
 
 	void OnDrawGizmos()

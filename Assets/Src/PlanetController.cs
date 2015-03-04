@@ -12,6 +12,7 @@ public class PlanetController : MonoBehaviour {
 	HullController hull;
 	GunController gun;
 	public int EnemyShips{get;set;}
+	public int Asteroids{get;set;}
 
 	MultiplierController multiplier;
 	public MultiplierController Multiplier

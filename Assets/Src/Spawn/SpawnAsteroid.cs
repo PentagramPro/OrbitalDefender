@@ -21,5 +21,14 @@ public class SpawnAsteroid : SpawnBase, ISpawner {
 		stage.Generator.DoSpawnAsteroid(AsteroidPrefab,MinOrbit,MaxOrbit);
 	}
 
+
+
+
+	public bool CanSpawn ()
+	{
+		return stage.MaxShips>stage.Generator.Planet.Asteroids;
+	}
+
+
 	#endregion
 }

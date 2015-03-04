@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class AsteroidController : MonoBehaviour {
 
+	public List<PowerupController> Powerups;
 
 	PlanetController planet;
 	// Use this for initialization
 	void Start () {
-	
+		if(planet==null)
+			planet = GameObject.FindGameObjectWithTag("Planet").GetComponent<PlanetController>();
+
+		planet.Asteroids++;
 	}
 	
 	// Update is called once per frame
@@ -15,24 +19,45 @@ public class AsteroidController : MonoBehaviour {
 	
 	}
 
+
 	void OnCollisionEnter2D(Collision2D coll) 
 	{
 		if(coll.gameObject.tag=="Enemy")
 		{
-			GameObject.Destroy(gameObject);
+			StartDestruction();
 		}
 		else if( coll.gameObject.tag=="Planet")
 		{
-			GameObject.Destroy(gameObject);
+			StartDestruction();
 			PlanetController p = coll.gameObject.GetComponent<PlanetController>();
 			p.Multiplier.ResetMultiplier();
 		}
 	}
 
+	void StartDestruction()
+	{
+		planet.Asteroids--;
+		collider2D.enabled = false;
+		GetComponent<Animator>().SetTrigger("Explode");
+		if(Powerups!=null && Powerups.Count>0)
+		{
+			PowerupController prefab = Powerups[Random.Range(0,Powerups.Count-1)];
+			GameObject o = (GameObject)GameObject.Instantiate(prefab.gameObject);
+			o.transform.position = transform.position;
+		}
+
+
+	}
+
+	public void OnExploded()
+	{
+		GameObject.Destroy(gameObject);
+	}
+
 	public void OnMissileCollision(MissileController missile)
 	{
 		planet.Multiplier.ResetMultiplier();
-		GameObject.Destroy(gameObject);
+		StartDestruction();
 		
 	}
 

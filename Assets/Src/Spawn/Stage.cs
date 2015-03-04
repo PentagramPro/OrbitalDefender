@@ -6,6 +6,7 @@ public class Stage : MonoBehaviour {
 	public float MinNextSpawn = 5, MaxNextSpawn=10;
 	public int MaxShips=5;
 	public int TotalShipsToSpawn = 10;
+	public bool StopOnFull = false;
 
 	[StoreThis]
 	float nextSpawn = 1;
@@ -62,7 +63,7 @@ public class Stage : MonoBehaviour {
 		if(state==Modes.Spawning)
 		{
 			counter+=Time.deltaTime;
-			if(counter>nextSpawn && Generator.Planet.EnemyShips<MaxShips)
+			if(counter>nextSpawn)
 			{
 				if(Spawners.Count==0)
 				{
@@ -70,20 +71,23 @@ public class Stage : MonoBehaviour {
 				}
 				else
 				{
-					Spawners[curSpawner].NextSpawn();
-					alreadySpawned++;
+					if(Spawners[curSpawner].CanSpawn() || StopOnFull)
+					{
+						Spawners[curSpawner].NextSpawn();
+						alreadySpawned++;
 
-					if(alreadySpawned>=TotalShipsToSpawn)
-					{
-						state = Modes.Check;
-					}
-					else
-					{
-						counter = 0;
-						nextSpawn = Random.Range(MinNextSpawn,MaxNextSpawn);
-						curSpawner++;
-						if(curSpawner>=Spawners.Count)
-							curSpawner = 0;
+						if(alreadySpawned>=TotalShipsToSpawn)
+						{
+							state = Modes.Check;
+						}
+						else
+						{
+							counter = 0;
+							nextSpawn = Random.Range(MinNextSpawn,MaxNextSpawn);
+							curSpawner++;
+							if(curSpawner>=Spawners.Count)
+								curSpawner = 0;
+						}
 					}
 				}
 			}

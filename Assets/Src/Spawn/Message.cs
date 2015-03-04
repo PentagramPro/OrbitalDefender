@@ -30,5 +30,14 @@ public class Message : MonoBehaviour, ISpawner {
 		Debug.Log("Msg: "+Text);
 	}
 
+
+
+
+	public bool CanSpawn ()
+	{
+		return true;
+	}
+
+
 	#endregion
 }

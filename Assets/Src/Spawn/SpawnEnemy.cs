@@ -27,5 +27,11 @@ public class SpawnEnemy : SpawnBase, ISpawner {
 		stage.Generator.DoSpawnEnemy(EnemyPrefab,MinOrbit,MaxOrbit,Immobile,Easy);
 	}
 
+
+	public bool CanSpawn ()
+	{
+		return stage.MaxShips>stage.Generator.Planet.EnemyShips;
+	}
+
 	#endregion
 }
