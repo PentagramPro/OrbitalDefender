@@ -131,10 +131,9 @@ public class EnemyShipController : MonoBehaviour {
 				}
 				if(counter.Count(FirePeriod))
 				{
-					FireballController fireball = FireballPrefab.PrefabInstantiate();
-					fireball.Damage = FireDamage;
-					fireball.transform.position = transform.position;
-					fireball.rigidbody2D.AddForce(  (Planet.transform.position-transform.position).normalized*FireImpulse,ForceMode2D.Impulse);
+					FireballController fireball = FireballPrefab.PrefabInstantiate(FireDamage,transform.position,
+					        (Planet.transform.position-transform.position).normalized*FireImpulse);
+
 					counter.Reset(Random.Range(0,FirePeriod*0.2f));
 					fireAnimationTriggered= false;
 				}

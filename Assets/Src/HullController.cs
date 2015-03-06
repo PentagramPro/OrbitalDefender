@@ -9,6 +9,9 @@ public class HullController : MonoBehaviour {
 	[StoreThis]
 	float hp;
 
+	[StoreThis]
+	bool stopReporting = false;
+
 	public float Hp{
 	get{
 			return hp;
@@ -86,7 +89,8 @@ public class HullController : MonoBehaviour {
 			ShieldPower--;
 			if(ShieldPower==0)
 			{
-				gameObject.SendMessage("OnShieldDestroyed", amount);
+
+				gameObject.SendMessage("OnShieldDestroyed", amount,SendMessageOptions.DontRequireReceiver);
 			}
 		}
 		else
@@ -95,11 +99,14 @@ public class HullController : MonoBehaviour {
 			if(hp<=0)
 			{
 				hp=0;
-				gameObject.SendMessage("OnHullDestroyed", amount);
+				if(!stopReporting)
+					gameObject.SendMessage("OnHullDestroyed", amount,SendMessageOptions.DontRequireReceiver);
+				stopReporting = true;
 			}
 			else
 			{
-				gameObject.SendMessage("OnHullDamaged", amount);
+				if(!stopReporting)
+					gameObject.SendMessage("OnHullDamaged", amount,SendMessageOptions.DontRequireReceiver);
 			}
 		}
 

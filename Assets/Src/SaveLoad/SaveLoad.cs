@@ -90,13 +90,14 @@ public class SaveLoad : MonoBehaviour {
 	{
 		StringWriterEx str = new StringWriterEx();
 
-		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+		EnemyShipController[] enemies = GameObject.FindObjectsOfType<EnemyShipController>();
 
 		str.WriteLine(enemies.Length);
 
-		foreach(GameObject enemy in enemies)
+		foreach(EnemyShipController es in enemies)
 		{
-			EnemyShipController es = enemy.GetComponent<EnemyShipController>();
+			//EnemyShipController es = enemy.GetComponent<EnemyShipController>();
 
 			Debug.Log("Save: storing "+es.PrefabName);
 			str.WriteLine(es.PrefabName);

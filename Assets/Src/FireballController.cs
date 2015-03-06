@@ -30,8 +30,12 @@ public class FireballController : MonoBehaviour {
 		}
 	}
 
-	public FireballController PrefabInstantiate()
+	public FireballController PrefabInstantiate(float damage, Vector3 position, Vector2 impulse)
 	{
-		return ((GameObject)GameObject.Instantiate(gameObject)).GetComponent<FireballController>();
+		FireballController fireball = ((GameObject)GameObject.Instantiate(gameObject)).GetComponent<FireballController>();
+		fireball.Damage = damage;
+		fireball.transform.position = position;
+		fireball.rigidbody2D.AddForce( impulse,ForceMode2D.Impulse);
+		return fireball;
 	}
 }
