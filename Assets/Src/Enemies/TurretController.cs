@@ -9,7 +9,9 @@ public class TurretController: MonoBehaviour {
 	void Start () {
 		fireControlller = GetComponent<PeriodicFireController>();
 		collider2D.enabled = false;
-		Boss = GetComponentInParent<BossController>();
+		Boss = GetComponent<BossController>();
+		if(Boss==null)
+			Boss = GetComponentInParent<BossController>();
 	}
 	
 	// Update is called once per frame
