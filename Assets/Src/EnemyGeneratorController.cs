@@ -7,16 +7,16 @@ public class EnemyGeneratorController : MonoBehaviour {
 
 	public PlanetController Planet;
 
-	Stage[] stages;
+	StageController[] stages;
 
 	[StoreThis]
 	int curStage = 0;
 
 	void Awake()
 	{
-		stages = GetComponentsInChildren<Stage>();
+		stages = GetComponentsInChildren<StageController>();
 
-		foreach(Stage s in stages)
+		foreach(StageController s in stages)
 		{
 			s.gameObject.SetActive(false);
 		}
@@ -37,7 +37,7 @@ public class EnemyGeneratorController : MonoBehaviour {
 		}
 		else
 		{
-			stages[curStage].ActivateStage(this);
+			stages[curStage].gameObject.SetActive(true);
 		}
 	}
 	// Use this for initialization

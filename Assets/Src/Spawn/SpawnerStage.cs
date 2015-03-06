@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class Stage : MonoBehaviour {
+[RequireComponent(typeof(StageController))]
+public class SpawnerStage : MonoBehaviour {
 	enum Modes {Off,Spawning, Check, Done}
 	public float MinNextSpawn = 5, MaxNextSpawn=10;
 	public int MaxShips=5;
@@ -26,14 +27,14 @@ public class Stage : MonoBehaviour {
 	Modes state = Modes.Off;
 
 	public EnemyGeneratorController Generator {get;internal set;}
-	public void ActivateStage(EnemyGeneratorController gen)
+	public void ActivateStage()
 	{
-		Generator = gen;
+		//Generator = gen as EnemyGeneratorController;
 
 		gameObject.SetActive(true);
 
 
-		state = Modes.Spawning;
+
 		/*if(Spawners.Count==0)
 		{
 			gameObject.SetActive(false);
@@ -44,6 +45,7 @@ public class Stage : MonoBehaviour {
 
 	void Awake()
 	{
+		Generator = GetComponentInParent<EnemyGeneratorController>();
 		Component[] comps = GetComponents<Component>();
 		foreach(Component c in comps)
 		{
@@ -51,6 +53,7 @@ public class Stage : MonoBehaviour {
 				Spawners.Add(c as ISpawner);
 			
 		}
+		state = Modes.Spawning;
 	}
 
 	// Use this for initialization

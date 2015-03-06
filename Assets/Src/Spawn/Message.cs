@@ -5,11 +5,11 @@ public class Message : MonoBehaviour, ISpawner {
 
 	public string Text;
 
-	protected Stage stage;
+	protected SpawnerStage stage;
 	
 	void Awake()
 	{
-		stage = GetComponent<Stage>();
+		stage = GetComponent<SpawnerStage>();
 	}
 
 	// Use this for initialization

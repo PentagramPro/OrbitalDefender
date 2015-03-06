@@ -8,11 +8,11 @@ public class SpawnBase : MonoBehaviour {
 
 	
 	
-	protected Stage stage;
+	protected SpawnerStage stage;
 	
 	void Awake()
 	{
-		stage = GetComponent<Stage>();
+		stage = GetComponent<SpawnerStage>();
 	}
 
 	void OnDrawGizmosSelected()

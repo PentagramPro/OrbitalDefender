@@ -58,9 +58,9 @@ public class SaveLoad : MonoBehaviour {
 			EnemyGeneratorController eg = GameObject.Find("EnemyGenerator").GetComponent<EnemyGeneratorController>();
 
 			ObjectSerializer.LoadComponent(str,eg);
-			Stage[] stages = eg.GetComponentsInChildren<Stage>();
+			StageController[] stages = eg.GetComponentsInChildren<StageController>();
 
-			foreach(Stage s in stages)
+			foreach(StageController s in stages)
 			{
 				ObjectSerializer.LoadObject(str,s.gameObject);
 			}
@@ -123,9 +123,9 @@ public class SaveLoad : MonoBehaviour {
 		EnemyGeneratorController eg = GameObject.Find("EnemyGenerator").GetComponent<EnemyGeneratorController>();
 		
 		ObjectSerializer.StoreComponent(str,eg);
-		Stage[] stages = eg.GetComponentsInChildren<Stage>();
+		StageController[] stages = eg.GetComponentsInChildren<StageController>();
 		
-		foreach(Stage s in stages)
+		foreach(StageController s in stages)
 		{
 			ObjectSerializer.StoreObject(str,s.gameObject);
 		}
