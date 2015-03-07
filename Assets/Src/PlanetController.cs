@@ -59,6 +59,16 @@ public class PlanetController : MonoBehaviour {
 		
 	}
 
+	public void OnVictory()
+	{
+		if(this.enabled)
+		{
+			UI.ActiveArea.gameObject.SetActive(false);
+			UI.OnVictory();
+			this.enabled = false;
+		}
+	}
+
 	void OnHullDestroyed(float amount)
 	{
 		if(this.enabled)
