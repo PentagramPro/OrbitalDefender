@@ -24,11 +24,11 @@ public class RocketController : MonoBehaviour {
 			Vector2 force = transform.TransformDirection(0,Power,0);
 
 
-			rigidbody2D.AddForceAtPosition(force,pos);
+			GetComponent<Rigidbody2D>().AddForceAtPosition(force,pos);
 
 
 
-			rigidbody2D.AddTorque(GetTorque());
+			GetComponent<Rigidbody2D>().AddTorque(GetTorque());
 
 			CurTime+=Time.fixedDeltaTime;
 			if(CurTime>=MaxTime)
@@ -54,7 +54,7 @@ public class RocketController : MonoBehaviour {
 	public float VelocityAngle
 	{
 		get{
-			Vector2 velocity = transform.InverseTransformDirection(rigidbody2D.velocity.normalized);
+			Vector2 velocity = transform.InverseTransformDirection(GetComponent<Rigidbody2D>().velocity.normalized);
 			float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg-90;
 			return angle;
 		}
@@ -74,6 +74,6 @@ public class RocketController : MonoBehaviour {
 		Gizmos.DrawLine(pos,pos+force);
 
 		Gizmos.color = Color.green;
-		Gizmos.DrawLine(pos,pos+rigidbody2D.velocity);
+		Gizmos.DrawLine(pos,pos+GetComponent<Rigidbody2D>().velocity);
 	}
 }

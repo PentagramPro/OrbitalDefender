@@ -8,7 +8,7 @@ public class TurretController: MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		fireControlller = GetComponent<PeriodicFireController>();
-		collider2D.enabled = false;
+		GetComponent<Collider2D>().enabled = false;
 		Boss = GetComponent<BossController>();
 		if(Boss==null)
 			Boss = GetComponentInParent<BossController>();
@@ -41,7 +41,7 @@ public class TurretController: MonoBehaviour {
 
 	public void OnTurretInitiated()
 	{
-		collider2D.enabled = true;
+		GetComponent<Collider2D>().enabled = true;
 		gameObject.SendMessage("StartFire",SendMessageOptions.DontRequireReceiver);
 	}
 }

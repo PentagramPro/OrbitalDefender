@@ -35,7 +35,7 @@ public class FireballController : MonoBehaviour {
 		FireballController fireball = ((GameObject)GameObject.Instantiate(gameObject)).GetComponent<FireballController>();
 		fireball.Damage = damage;
 		fireball.transform.position = position;
-		fireball.rigidbody2D.AddForce( impulse,ForceMode2D.Impulse);
+		fireball.GetComponent<Rigidbody2D>().AddForce( impulse,ForceMode2D.Impulse);
 		return fireball;
 	}
 }

@@ -20,21 +20,24 @@ public class UIController : MonoBehaviour {
 
 	Canvas canvas;
 
-
-	// Use this for initialization
-	void Start () {
+	void Awake()
+	{
 		canvas = GetComponent<Canvas>();
 		hpBarRect  = HpBar.GetComponent<RectTransform>();
 		hpBarDefPos = hpBarRect.position;
+	}
+	// Use this for initialization
+	void Start () {
+	
+
 		Menu.gameObject.SetActive(false);
 		Time.timeScale = 1;
+		//ShiftTopBar (true);
 	}
 
 
 	public void ShiftTopBar(bool shift)
 	{
-
-
 		hpBarRect.position = hpBarDefPos-(shift?new Vector3(0,50*Screen.dpi/160f	,0):Vector3.zero);
 	}
 

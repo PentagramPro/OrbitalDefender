@@ -10,6 +10,7 @@ public class EnemyShipController : MonoBehaviour {
 	public FireballController FireballPrefab;
 
 	public int Score = 10;
+	public int MaxShots = 5;
 	public float FirePeriod = 6;
 	public float FireDamage = 5;
 	public float FireImpulse = 5;
@@ -73,7 +74,7 @@ public class EnemyShipController : MonoBehaviour {
 	void OnShieldDestroyed(float amount)
 	{
 		if(state==Modes.Orbiting)
-			rigidbody2D.isKinematic = false;
+			GetComponent<Rigidbody2D>().isKinematic = false;
 	}
 
 	void OnHullDamaged(float amount) 
@@ -112,7 +113,7 @@ public class EnemyShipController : MonoBehaviour {
 			{
 				explosionObject.transform.parent = null;
 				explosionObject.enabled = true;
-				explosionObject.particleSystem.Stop();
+				explosionObject.GetComponent<ParticleSystem>().Stop();
 				GameObject.Destroy(gameObject);
 			}
 		}
@@ -144,7 +145,7 @@ public class EnemyShipController : MonoBehaviour {
 				{
 					counter.Reset();
 					state = Modes.Orbiting;
-					collider2D.enabled = true;
+					GetComponent<Collider2D>().enabled = true;
 				}
 			}
 		}
@@ -169,12 +170,12 @@ public class EnemyShipController : MonoBehaviour {
 		{
 			ship.state = Modes.Appearing;
 
-			ship.rigidbody2D.isKinematic = hull.InitialShieldPower>0;
+			ship.GetComponent<Rigidbody2D>().isKinematic = hull.InitialShieldPower>0;
 
 			ship.transform.position = orbit;
 			fly.enabled = false;
 			pgrav.enabled = false;
-			collider2D.enabled = false;
+			GetComponent<Collider2D>().enabled = false;
 			anim.SetTrigger("Appear");
 		}
 		else

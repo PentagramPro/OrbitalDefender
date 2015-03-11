@@ -33,7 +33,7 @@ public class GunController : MonoBehaviour {
 		GameObject go = GameObject.Instantiate(MissilePrefab.gameObject) as GameObject;
 		MissileController mc = go.GetComponent<MissileController>();
 		mc.transform.position = (Vector2)transform.position+direction.normalized*3;
-		mc.rigidbody2D.AddForce(direction*FireStrength,ForceMode2D.Impulse);
+		mc.GetComponent<Rigidbody2D>().AddForce(direction*FireStrength,ForceMode2D.Impulse);
 		mc.Damage = Damage;
 		mc.SendMessage("OnFire", direction);
 		/*

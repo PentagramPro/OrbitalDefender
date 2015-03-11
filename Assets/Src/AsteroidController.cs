@@ -37,7 +37,7 @@ public class AsteroidController : MonoBehaviour {
 	void StartDestruction()
 	{
 		planet.Asteroids--;
-		collider2D.enabled = false;
+		GetComponent<Collider2D>().enabled = false;
 		GetComponent<Animator>().SetTrigger("Explode");
 		if(Powerups!=null && Powerups.Count>0)
 		{

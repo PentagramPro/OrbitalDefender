@@ -32,9 +32,10 @@ public class SaveLoad : MonoBehaviour {
 			for(int i=0;i<enemiesCount;i++)
 			{
 				string prefabName = str.ReadLine();
-				string path = "Assets/Resources/Prefabs/Ships/"+prefabName+".prefab";
-				
-				GameObject prefab = (GameObject)Resources.LoadAssetAtPath(path,typeof(GameObject));
+				string path = "Prefabs/Ships/"+prefabName+".prefab";
+
+
+				GameObject prefab = (GameObject)Resources.Load(path,typeof(GameObject));
 				Debug.Log("path: "+path+", val="+(prefab==null));
 				EnemyShipController ship = ((GameObject)GameObject.Instantiate(prefab)).GetComponent<EnemyShipController>();
 				ship.PrefabName = prefabName;

@@ -13,6 +13,6 @@ public class MainMenuBgController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		offset+=ScrollSpeed*Time.deltaTime;
-		renderer.material.mainTextureOffset = new Vector2(0,offset);
+		GetComponent<Renderer>().material.mainTextureOffset = new Vector2(0,offset);
 	}
 }

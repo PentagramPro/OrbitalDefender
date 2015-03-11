@@ -32,10 +32,10 @@ public class FlyController : MonoBehaviour {
 		if(newDist>distanceToOrbit)
 		{
 
-			rigidbody2D.isKinematic = false;
+			GetComponent<Rigidbody2D>().isKinematic = false;
 			PointGravity.enabled = true;
 			float toPlanet = (transform.position-Planet.transform.position).magnitude;
-			rigidbody2D.AddForce(Direction.normalized*Mathf.Sqrt(Planet.CalculateGravity(toPlanet)*toPlanet), ForceMode2D.Impulse);
+			GetComponent<Rigidbody2D>().AddForce(Direction.normalized*Mathf.Sqrt(Planet.CalculateGravity(toPlanet)*toPlanet), ForceMode2D.Impulse);
 
 			if(OnFlyingComplete!=null)
 				OnFlyingComplete();
@@ -55,7 +55,7 @@ public class FlyController : MonoBehaviour {
 	{
 		OrbitPoint = orbitPoint;
 		Planet = planet;
-		rigidbody2D.isKinematic = true;
+		GetComponent<Rigidbody2D>().isKinematic = true;
 	}
 	void OnDrawGizmosSelected()
 	{

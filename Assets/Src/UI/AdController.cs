@@ -8,7 +8,7 @@ public class AdController : MonoBehaviour {
 
 	public UIController UI;
 	enum Modes{Count,Wait}
-	Modes state = Modes.Count;
+	Modes state = Modes.Wait;
 
 
 	CountTime counter;
@@ -31,7 +31,8 @@ public class AdController : MonoBehaviour {
 		Debug.Log("Ad loaded by BannerView");
 
 		state = Modes.Count;
-		UI.ShiftTopBar(true);
+
+
 
 	}
 
@@ -60,6 +61,9 @@ public class AdController : MonoBehaviour {
 		bannerView.AdLoaded+=OnAdLoaded;
 
 		counter = new CountTime(RefreshRate);
+
+		RequestBanner ();
+		UI.ShiftTopBar(true);
 	}
 	
 	// Update is called once per frame

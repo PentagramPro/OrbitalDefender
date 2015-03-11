@@ -11,11 +11,11 @@ public class LayerChanger : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		if(renderer!=null)
+		if(GetComponent<Renderer>()!=null)
 		{
 
-			Particles.renderer.sortingLayerName = LayerName;
-			Particles.renderer.sortingOrder = SortingOrder;
+			Particles.GetComponent<Renderer>().sortingLayerName = LayerName;
+			Particles.GetComponent<Renderer>().sortingOrder = SortingOrder;
 		}
 	}
 	

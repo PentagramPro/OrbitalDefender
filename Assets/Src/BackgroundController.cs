@@ -15,14 +15,14 @@ public class BackgroundController : MonoBehaviour {
 		MeshRenderer r = GetComponent<MeshRenderer>();
 		r.sortingLayerName = SortingLayerName;
 		r.sortingOrder = SortingOrder;
-		baseScale = renderer.material.mainTextureScale;
-		baseOffset = renderer.material.mainTextureOffset;
+		baseScale = GetComponent<Renderer>().material.mainTextureScale;
+		baseOffset = GetComponent<Renderer>().material.mainTextureOffset;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		Vector2 delta = new Vector2(1,1)*parallax*Camera.main.orthographicSize;
-		renderer.material.mainTextureScale = baseScale+delta;
-		renderer.material.mainTextureOffset = baseOffset-delta/2;
+		GetComponent<Renderer>().material.mainTextureScale = baseScale+delta;
+		GetComponent<Renderer>().material.mainTextureOffset = baseOffset-delta/2;
 	}
 }

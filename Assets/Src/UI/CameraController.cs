@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour {
 	float targetSize;
 	// Use this for initialization
 	void Start () {
-		camera.orthographicSize = MinSize;
+		GetComponent<Camera>().orthographicSize = MinSize;
 		targetSize = MinSize;
 
 	}
@@ -19,27 +19,27 @@ public class CameraController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if(targetSize!=camera.orthographicSize)
+		if(targetSize!=GetComponent<Camera>().orthographicSize)
 		{
-			if(targetSize>camera.orthographicSize)
+			if(targetSize>GetComponent<Camera>().orthographicSize)
 			{
-				camera.orthographicSize+=ZoomSpeed*Time.smoothDeltaTime;
-				if(camera.orthographicSize>targetSize)
-					camera.orthographicSize = targetSize;
+				GetComponent<Camera>().orthographicSize+=ZoomSpeed*Time.smoothDeltaTime;
+				if(GetComponent<Camera>().orthographicSize>targetSize)
+					GetComponent<Camera>().orthographicSize = targetSize;
 			}
 			else
 			{
-				camera.orthographicSize-=ZoomSpeed*Time.smoothDeltaTime;
-				if(camera.orthographicSize<targetSize)
-					camera.orthographicSize = targetSize;
+				GetComponent<Camera>().orthographicSize-=ZoomSpeed*Time.smoothDeltaTime;
+				if(GetComponent<Camera>().orthographicSize<targetSize)
+					GetComponent<Camera>().orthographicSize = targetSize;
 			}
 		}
 	}
 
 	public void OnChangeZoom(float val)
 	{
-		float w =  camera.orthographicSize*camera.aspect;
-		float h =  camera.orthographicSize;
+		float w =  GetComponent<Camera>().orthographicSize*GetComponent<Camera>().aspect;
+		float h =  GetComponent<Camera>().orthographicSize;
 		float calcMax = MaxSize;
 		if(w<h)
 			calcMax+=h-w;
