@@ -31,11 +31,13 @@ public class FlyController : MonoBehaviour {
 		float newDist = ((Vector2)transform.position-OrbitPoint).magnitude;
 		if(newDist>distanceToOrbit)
 		{
-
-			GetComponent<Rigidbody2D>().isKinematic = false;
+			Rigidbody2D rb = GetComponent<Rigidbody2D>();
+			rb.isKinematic = false;
 			PointGravity.enabled = true;
 			float toPlanet = (transform.position-Planet.transform.position).magnitude;
-			GetComponent<Rigidbody2D>().AddForce(Direction.normalized*Mathf.Sqrt(Planet.CalculateGravity(toPlanet)*toPlanet), ForceMode2D.Impulse);
+			rb.AddForce(
+				Direction.normalized*Mathf.Sqrt(Planet.CalculateGravity(toPlanet,rb.mass)*toPlanet), 
+				ForceMode2D.Impulse);
 
 			if(OnFlyingComplete!=null)
 				OnFlyingComplete();

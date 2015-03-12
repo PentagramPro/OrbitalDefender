@@ -11,7 +11,14 @@ public class PlanetController : MonoBehaviour {
 
 	HullController hull;
 	GunController gun;
-	public int EnemyShips{get;set;}
+
+	int enemyShips = 0;
+	public int EnemyShips{get{
+			return enemyShips;
+		}
+		set{
+			enemyShips = Mathf.Max(0,value);
+		}}
 	public int Asteroids{get;set;}
 
 	MultiplierController multiplier;
@@ -88,9 +95,9 @@ public class PlanetController : MonoBehaviour {
 
 	}
 
-	public float CalculateGravity(float distance)
+	public float CalculateGravity(float distance, float mass)
 	{
-		return Mathf.Max((1.0f - distance / MaxDistance) * MaxGravity,0);
+		return Mathf.Max((1.0f - distance / MaxDistance) * MaxGravity*mass,0);
 	}
 	
 	// Update is called once per frame

@@ -21,7 +21,7 @@ public class PointGravityController : MonoBehaviour {
 			float dist = Vector3.Distance(planet.transform.position, transform.position);
 			if (dist <= planet.MaxDistance) {
 				Vector3 v = planet.transform.position - transform.position;
-				GetComponent<Rigidbody2D>().AddForce(v.normalized * planet.CalculateGravity(dist));
+				GetComponent<Rigidbody2D>().AddForce(v.normalized * planet.CalculateGravity(dist, GetComponent<Rigidbody2D>().mass));
 			}
 		}
 	}

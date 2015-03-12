@@ -97,7 +97,7 @@ public class SpawnerStage : MonoBehaviour {
 		}
 		else if(state==Modes.Check)
 		{
-			if(Generator.Planet.EnemyShips==0)
+			if(Generator.Planet.EnemyShips<=0)
 			{
 				Generator.OnStageComplete();
 				state = Modes.Done;

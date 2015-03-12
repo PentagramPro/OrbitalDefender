@@ -20,15 +20,16 @@ public class RocketController : MonoBehaviour {
 	void FixedUpdate () {
 		if(state==Modes.Engine)
 		{
+			Rigidbody2D r = GetComponent<Rigidbody2D>();
 			Vector2 pos = transform.TransformPoint(EnginePos);
-			Vector2 force = transform.TransformDirection(0,Power,0);
+			Vector2 force = transform.TransformDirection(0,Power*r.mass,0);
 
 
-			GetComponent<Rigidbody2D>().AddForceAtPosition(force,pos);
+			r.AddForceAtPosition(force,pos);
 
 
 
-			GetComponent<Rigidbody2D>().AddTorque(GetTorque());
+			r.AddTorque(GetTorque()*r.mass);
 
 			CurTime+=Time.fixedDeltaTime;
 			if(CurTime>=MaxTime)

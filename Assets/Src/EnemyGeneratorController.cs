@@ -73,9 +73,9 @@ public class EnemyGeneratorController : MonoBehaviour {
 		else
 		{
 			if(Random.Range(0f,1f)<0.5f)
-				angle = Random.Range(0f,90f);
+				angle = Random.Range(0f,75f);
 			else
-				angle = Random.Range(270,359f);
+				angle = Random.Range(285f,359f);
 		}
 
 		Vector2 orbit =  new Vector2(0,Random.Range(low,high)).Rotate(angle);

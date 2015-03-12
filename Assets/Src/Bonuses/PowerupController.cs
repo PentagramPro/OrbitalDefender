@@ -22,11 +22,25 @@ public class PowerupController : MonoBehaviour {
 		GameObject.Destroy(gameObject);
 	}
 
+	void OnCollisionEnter2D(Collision2D coll) 
+	{
+		if(coll.gameObject.tag=="Planet")
+		{
+			StartDestruction();
+		}
+	}
+
 	public void OnMissileCollision(MissileController missile)
+	{
+
+		StartDestruction();
+	}
+
+
+	void StartDestruction()
 	{
 		GameObject p = GameObject.FindGameObjectWithTag("Planet");
 		BonusBall.Instantiate(transform.position,p.transform,BonusType);
 		animator.SetTrigger("Explode");
-
 	}
 }
