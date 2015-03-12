@@ -7,6 +7,7 @@ public class RocketController : MonoBehaviour {
 	public float MaxTime = 4;
 	public float Power = 100;
 	public Vector2 EnginePos;
+	public float TorqueMult = 1;
 	MissileController missile;
 	float BaseTorque = 0;
 
@@ -64,7 +65,7 @@ public class RocketController : MonoBehaviour {
 	{
 
 		//return VelocityAngle*0.01f;
-		return BaseTorque;
+		return BaseTorque*TorqueMult;
 	}
 	void OnDrawGizmos()
 	{

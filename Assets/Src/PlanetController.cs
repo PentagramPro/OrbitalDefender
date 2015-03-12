@@ -45,20 +45,26 @@ public class PlanetController : MonoBehaviour {
 
 	public void OnMissileCollision(MissileController missile)
 	{
-		Multiplier.ResetMultiplier();
+		if(missile.ResetMultiplier)
+			Multiplier.ResetMultiplier();
 	}
 
 	void OnBonus(Bonus type)
 	{
-		if(type==Bonus.Shield)
+		switch(type)
 		{
-			hull.ShieldPower = ShieldBonus;
-		}
-		else if(type==Bonus.Hp)
-		{
+		case Bonus.Hp:
 			hull.AddHp(HpBonus);
 			UI.HpBar.HP = hull.Hp;
+			break;
+		case Bonus.Shield:
+			hull.ShieldPower = ShieldBonus;
+			break;
+		case Bonus.Weapon:
+			gun.RandomWeapon();
+			break;
 		}
+
 	}
 
 	void OnShieldDestroyed(float amount)

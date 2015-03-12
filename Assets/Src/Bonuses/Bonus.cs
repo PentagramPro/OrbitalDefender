@@ -11,7 +11,8 @@ using System;
 
 public enum Bonus
 {
-	Shield,Hp,RemoveAsteroids
+	Shield,Hp,RemoveAsteroids, Weapon
+
 }
 
 

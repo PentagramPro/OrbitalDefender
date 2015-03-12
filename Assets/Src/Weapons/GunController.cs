@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class GunController : MonoBehaviour {
 
@@ -7,6 +7,8 @@ public class GunController : MonoBehaviour {
 	public BarrelController Barrel;
 	public float FireStrength = 100;
 	public float Damage = 10;
+
+	public List<MissileController> Weapons;
 	//PlanetController planet;
 
 	void Awake()
@@ -30,17 +32,34 @@ public class GunController : MonoBehaviour {
 
 	public void OnFire(Vector2 direction)
 	{
-		GameObject go = GameObject.Instantiate(MissilePrefab.gameObject) as GameObject;
-		MissileController mc = go.GetComponent<MissileController>();
-		mc.transform.position = (Vector2)transform.position+direction.normalized*3;
-		mc.GetComponent<Rigidbody2D>().AddForce(direction*FireStrength,ForceMode2D.Impulse);
-		mc.Damage = Damage;
-		mc.SendMessage("OnFire", direction);
-		/*
-		RocketController rc = mc.GetComponent<RocketController>();
-		if(rc!=null)
-		{
 
-		}*/
+		MissileController mc = MissilePrefab.PrefabInstantiate(
+			(Vector2)transform.position+direction.normalized*3,
+			Damage,
+			direction*FireStrength);
+
+
+		mc.SendMessage("OnFire", direction);
+
+	}
+
+	public void RandomWeapon()
+	{
+		if(Weapons==null || Weapons.Count==0)
+			return;
+
+		if(Weapons.Count==1)
+		{
+			MissilePrefab = Weapons[0];
+			return;
+		}
+
+		int i = Random.Range(0,Weapons.Count-1);
+		if(MissilePrefab==Weapons[i])
+			i++;
+		if(i>=Weapons.Count)
+			i=0;
+		MissilePrefab = Weapons[i];
+
 	}
 }
