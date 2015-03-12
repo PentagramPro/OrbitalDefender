@@ -29,6 +29,13 @@ public class UIController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	
+		/*string path = "Ship1";
+		GameObject prefab = (GameObject)Resources.Load(path,typeof(GameObject));
+		if(prefab==null)
+			Debug.Log("Nothing loaded");
+		else 
+			Debug.Log("Loaded "+prefab.name);*/
+
 
 		Menu.gameObject.SetActive(false);
 		Time.timeScale = 1;

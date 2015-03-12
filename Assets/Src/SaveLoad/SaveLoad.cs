@@ -32,7 +32,7 @@ public class SaveLoad : MonoBehaviour {
 			for(int i=0;i<enemiesCount;i++)
 			{
 				string prefabName = str.ReadLine();
-				string path = "Prefabs/Ships/"+prefabName+".prefab";
+				string path = prefabName;
 
 
 				GameObject prefab = (GameObject)Resources.Load(path,typeof(GameObject));

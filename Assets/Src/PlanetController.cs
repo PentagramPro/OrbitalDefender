@@ -73,6 +73,7 @@ public class PlanetController : MonoBehaviour {
 	{
 		if(this.enabled)
 		{
+			UI.HpBar.HP = 0;
 			UI.ActiveArea.gameObject.SetActive(false);
 			UI.OnGameOver();
 			this.enabled = false;

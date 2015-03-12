@@ -14,6 +14,7 @@ public class EnemyShipController : MonoBehaviour {
 	public float FirePeriod = 6;
 	public float FireDamage = 5;
 	public float FireImpulse = 5;
+	public float FleeImpulse = 7;
 
 	public float FireAnimationShift = 0.5f;
 
@@ -26,6 +27,9 @@ public class EnemyShipController : MonoBehaviour {
 	//float fireCounter = 0;
 	[StoreThis]
 	Modes state = Modes.Flying;
+
+	[StoreThis]
+	int shots = 0;
 
 	public PlanetController Planet;
 	FlyController flyController;
@@ -135,6 +139,8 @@ public class EnemyShipController : MonoBehaviour {
 					FireballController fireball = FireballPrefab.PrefabInstantiate(FireDamage,transform.position,
 					        (Planet.transform.position-transform.position).normalized*FireImpulse);
 
+
+					CheckShots();
 					counter.Reset(Random.Range(0,FirePeriod*0.2f));
 					fireAnimationTriggered= false;
 				}
@@ -151,6 +157,17 @@ public class EnemyShipController : MonoBehaviour {
 		}
 	}
 
+	void CheckShots()
+	{
+		shots++;
+		if(shots>MaxShots)
+		{
+			GetComponent<Rigidbody2D>().AddForce(
+				(transform.position-Planet.transform.position).normalized*FleeImpulse,
+				ForceMode2D.Impulse);
+			state = Modes.Flying;
+		}
+	}
 	void OnFlyComplete()
 	{
 		state = Modes.Orbiting;
