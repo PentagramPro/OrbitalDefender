@@ -18,10 +18,12 @@ public class ActiveAreaController : MonoBehaviour, IDragHandler, IBeginDragHandl
 	RectTransform rt;
 	Modes state = Modes.Idle;
 	Canvas canvas;
+	UIController ui;
 
 	void Awake()
 	{
 		canvas = GetComponentInParent<Canvas>();
+		ui = GetComponentInParent<UIController>();
 	}
 	// Use this for initialization
 	void Start () {
@@ -115,7 +117,7 @@ public class ActiveAreaController : MonoBehaviour, IDragHandler, IBeginDragHandl
 			state = Modes.Idle;
 			if(FireDirection.magnitude>0)
 			{
-				Gun.OnFire(FireDirection);
+				Gun.OnFire(FireDirection,ui.IsAltFireMode);
 			}
 		}
 	}

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class UIController : MonoBehaviour {
@@ -13,6 +14,8 @@ public class UIController : MonoBehaviour {
 	public GameoverMenu Gameover;
 	public VictoryMenu VictoryMenu;
 	public ActiveAreaController ActiveArea;
+	public Toggle FireModeToggle;
+
 
 	Modes state = Modes.Playing;
 	Vector3 hpBarDefPos;
@@ -42,6 +45,12 @@ public class UIController : MonoBehaviour {
 		//ShiftTopBar (true);
 	}
 
+	public bool IsAltFireMode
+	{
+		get{
+			return !FireModeToggle.isOn;
+		}
+	}
 
 	public void ShiftTopBar(bool shift)
 	{

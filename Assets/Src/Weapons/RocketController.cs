@@ -2,21 +2,21 @@
 using System.Collections;
 
 public class RocketController : MonoBehaviour {
-	enum Modes {Force, ForceAndTorque, Torque,Fly}
-	Modes state = Modes.ForceAndTorque;
-	public float MaxTime = 4;
-	public float DoublePhaseTorqueTime = 2;
-	public float DoublePhaseTorqueMult = 1.5f;
+	enum Modes {Delay,Engine,Fly}
+	Modes state = Modes.Delay;
+	public float DelayTime = 1;
+	public float DelayTorqueMult = 1;
+	public float EnginesTime = 4;
+	public float EnginesTorqueMult = 0;
+
 	public float Power = 100;
 	public Vector2 EnginePos;
-	public float TorqueMult = 1;
-
 
 
 	MissileController missile;
 	float BaseTorque = 0;
 
-	float CurTime = 0;
+	CountTime Counter = new CountTime();
 	// Use this for initialization
 	void Start () {
 		missile = GetComponent<MissileController>();
@@ -26,8 +26,7 @@ public class RocketController : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 
-		if(state==Modes.Fly)
-			return;
+
 
 
 		Rigidbody2D r = GetComponent<Rigidbody2D>();
@@ -36,54 +35,50 @@ public class RocketController : MonoBehaviour {
 
 		switch(state)
 		{
-		case Modes.Force:
-			r.AddForceAtPosition(force,pos);
+		case Modes.Delay:
+			//r.AddForceAtPosition(force,pos);
+			r.AddTorque(GetTorque()*r.mass*DelayTorqueMult);
 
-			CurTime+=Time.fixedDeltaTime;
-			if(CurTime>=MaxTime)
+
+			if(Counter.Count(DelayTime))
+			{
+				state = Modes.Engine;
+				missile.TrailEffect.gameObject.SetActive(true);
+				r.angularVelocity = 0;
+				Counter.Reset();
+			}
+			break;
+		case Modes.Engine:
+			r.AddForceAtPosition(force,pos);
+			r.AddTorque(GetTorque()*r.mass*EnginesTorqueMult);
+			
+
+			if(Counter.Count(EnginesTime))
 			{
 				state = Modes.Fly;
+				Counter.Reset();
 				missile.DetachTrail();
 			}
 			break;
-		case Modes.ForceAndTorque:
-			r.AddForceAtPosition(force,pos);
-			r.AddTorque(GetTorque()*r.mass);
-			
-			CurTime+=Time.fixedDeltaTime;
-			if(CurTime>=MaxTime)
-			{
-				state = Modes.Fly;
-				missile.DetachTrail();
-			}
-			break;
-		case Modes.Torque:
-			r.AddTorque(GetTorque()*r.mass*DoublePhaseTorqueMult);
-			
-			CurTime+=Time.fixedDeltaTime;
-			if(CurTime>=DoublePhaseTorqueTime)
-			{
-				state = Modes.Force;
-				CurTime = 0;
-			}
-			break;
-		}
-		if(state==Modes.ForceAndTorque)
-		{
+		case Modes.Fly:
 
+			break;
 		}
+
 
 	}
 
 	public void OnFire(Vector2 direction)
 	{
-		MaxTime*=direction.magnitude;
+		missile = GetComponent<MissileController>();
+		EnginesTime*=direction.magnitude;
 		float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg-90;
 		transform.rotation =  Quaternion.Euler(0,0,angle);
-		CurTime = 0;
-		BaseTorque = -direction.x;
-		state = Modes.Torque;
 
+		BaseTorque = -direction.x;
+
+
+		missile.TrailEffect.gameObject.SetActive(false);
 	}
 
 	public float VelocityAngle
@@ -98,7 +93,7 @@ public class RocketController : MonoBehaviour {
 	{
 
 		//return VelocityAngle*0.01f;
-		return BaseTorque*TorqueMult;
+		return BaseTorque;
 	}
 	void OnDrawGizmos()
 	{

@@ -14,6 +14,7 @@ public class MissileController : MonoBehaviour {
 	public FxRemover TrailEffect;
 	public GameObject ExplosionEffect;
 	public float Lifetime = 10;
+	public float FirePower = 20;
 	public float Damage {get;set;}
 	public bool ResetMultiplier = true;
 

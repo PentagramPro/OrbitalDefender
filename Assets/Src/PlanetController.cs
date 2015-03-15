@@ -11,6 +11,11 @@ public class PlanetController : MonoBehaviour {
 
 	HullController hull;
 	GunController gun;
+	public GunController Gun{
+		get{
+			return gun;
+		}
+	}
 
 	int enemyShips = 0;
 	public int EnemyShips{get{

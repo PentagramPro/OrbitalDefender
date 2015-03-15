@@ -49,6 +49,7 @@ public class SaveLoad : MonoBehaviour {
 			PlanetController planet = GameObject.FindGameObjectWithTag("Planet").GetComponent<PlanetController>();
 
 			ObjectSerializer.LoadObject(str,planet.gameObject);
+			ObjectSerializer.LoadObject(str,planet.Gun.gameObject);
 
 			UIController ui = GameObject.Find("UICanvas").GetComponent<UIController>();;
 			
@@ -114,6 +115,7 @@ public class SaveLoad : MonoBehaviour {
 		PlanetController planet = GameObject.FindGameObjectWithTag("Planet").GetComponent<PlanetController>();
 
 		ObjectSerializer.StoreObject(str,planet.gameObject);
+		ObjectSerializer.StoreObject(str,planet.Gun.gameObject);
 
 		UIController ui = GameObject.Find("UICanvas").GetComponent<UIController>();
 
