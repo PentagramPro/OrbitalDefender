@@ -92,6 +92,10 @@ public class HullController : MonoBehaviour {
 
 				gameObject.SendMessage("OnShieldDestroyed", amount,SendMessageOptions.DontRequireReceiver);
 			}
+			else
+			{
+				Shield.OnDamageRecieved();
+			}
 		}
 		else
 		{

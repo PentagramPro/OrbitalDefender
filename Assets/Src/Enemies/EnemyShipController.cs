@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemyShipController : MonoBehaviour {
 
 	enum Modes{
-		Appearing,Flying,Orbiting,Exploding
+		Appearing,Flying,Orbiting,Exploding,Retreating
 	}
 	public FxRemover ExplosionsFx;
 	public FireballController FireballPrefab;
@@ -16,7 +16,6 @@ public class EnemyShipController : MonoBehaviour {
 	public float FireImpulse = 5;
 	public float FleeImpulse = 7;
 
-	public float FireAnimationShift = 0.5f;
 
 	CameraController camController;
 
@@ -41,7 +40,7 @@ public class EnemyShipController : MonoBehaviour {
 	public float AppearingTime = 3;
 	public float ExplosionTime = 3;
 	FxRemover explosionObject;
-	bool fireAnimationTriggered = false;
+
 
 	public string PrefabName{get;set;}
 
@@ -126,26 +125,18 @@ public class EnemyShipController : MonoBehaviour {
 		else
 		{
 			float dist = (transform.position-Planet.transform.position).magnitude;
-			if(dist>camController.MaxSize)
+
+			if(state!=Modes.Flying && dist>camController.MaxSize)
 				StartDestruction();
 
 			if(state==Modes.Orbiting)
 			{
-				if(!fireAnimationTriggered && counter.Count(FirePeriod-FireAnimationShift))
-				{
-					animator.SetTrigger("Fire");
-					fireAnimationTriggered = true;
-				}
 				if(counter.Count(FirePeriod))
 				{
-					FireballController fireball = FireballPrefab.PrefabInstantiate(FireDamage,transform.position,
-					        (Planet.transform.position-transform.position).normalized*FireImpulse);
-
-
-					CheckShots();
-					counter.Reset(Random.Range(0,FirePeriod*0.2f));
-					fireAnimationTriggered= false;
+					animator.SetTrigger("Fire");
+					counter.Reset(Random.Range(0,FirePeriod*0.15f));
 				}
+
 			}
 			else if(state==Modes.Appearing)
 			{
@@ -159,6 +150,16 @@ public class EnemyShipController : MonoBehaviour {
 		}
 	}
 
+	public void OnReadyToFire()
+	{
+		FireballController fireball = FireballPrefab.PrefabInstantiate(FireDamage,transform.position,
+               (Planet.transform.position-transform.position).normalized*FireImpulse);
+		
+		
+		CheckShots();
+		counter.Reset(Random.Range(0,FirePeriod*0.2f));
+	}
+
 	void CheckShots()
 	{
 		shots++;
@@ -167,13 +168,14 @@ public class EnemyShipController : MonoBehaviour {
 			GetComponent<Rigidbody2D>().AddForce(
 				(transform.position-Planet.transform.position).normalized*FleeImpulse,
 				ForceMode2D.Impulse);
-			state = Modes.Flying;
+			state = Modes.Retreating;
 		}
 	}
 	void OnFlyComplete()
 	{
 		state = Modes.Orbiting;
-
+		GetComponent<Collider2D>().enabled = true;
+		animator.SetTrigger("FlyComplete");
 	}
 
 	public EnemyShipController PrefabInstantiate(PlanetController planet, Vector2 orbit, Vector2 position, bool immobile)
@@ -203,6 +205,7 @@ public class EnemyShipController : MonoBehaviour {
 			fly.PrepareFly(orbit,planet);
 
 			ship.transform.position = position;
+
 		}
 
 

@@ -46,7 +46,7 @@ public class BonusBallController : MonoBehaviour {
 			break;
 		case Modes.Exploding:
 			if(counter.Count(ChargeTime))
-				state = Modes.Exploding;
+				GameObject.Destroy(gameObject);
 			break;
 		}
 
