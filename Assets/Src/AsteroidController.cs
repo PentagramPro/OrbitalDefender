@@ -41,7 +41,7 @@ public class AsteroidController : MonoBehaviour {
 		GetComponent<Animator>().SetTrigger("Explode");
 		if(Powerups!=null && Powerups.Count>0)
 		{
-			PowerupController prefab = Powerups[Random.Range(0,Powerups.Count-1)];
+			PowerupController prefab = Powerups[Random.Range(0,Powerups.Count)];
 			GameObject o = (GameObject)GameObject.Instantiate(prefab.gameObject);
 			o.transform.position = transform.position;
 		}

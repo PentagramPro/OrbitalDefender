@@ -41,7 +41,8 @@ public class HullController : MonoBehaviour {
 	[ExecuteAfterLoad]
 	void OnDeserialized()
 	{
-		ShieldPower = shieldPower;
+		if(Shield!=null)
+			ShieldPower = shieldPower;
 	}
 
 	void Awake()
