@@ -20,7 +20,8 @@ public class FragmentsShrapnel : MonoBehaviour {
 
 	void OnLaunchFragments(MissileController.FragmentsArg arg)
 	{
-
+		if(arg.cause==null)
+			return;
 		Vector2 dir = Random.insideUnitCircle.normalized;
 		for(int i=0;i<Fragments;i++)
 		{
