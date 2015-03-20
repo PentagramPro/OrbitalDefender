@@ -16,11 +16,11 @@ public class ShieldFxController : MonoBehaviour {
 			return shieldEnabled;
 		}
 		set{
-			if(value)
+			if(value && !shieldEnabled)
 			{
 				ShieldAnimator.SetTrigger("Enable");
 			}
-			else
+			else if(!value && shieldEnabled)
 				ShieldAnimator.SetTrigger("Disable");
 
 			shieldEnabled = value;

@@ -60,7 +60,7 @@ public class SaveLoad : MonoBehaviour {
 			EnemyGeneratorController eg = GameObject.Find("EnemyGenerator").GetComponent<EnemyGeneratorController>();
 
 			ObjectSerializer.LoadComponent(str,eg);
-			StageController[] stages = eg.GetComponentsInChildren<StageController>();
+			StageController[] stages = eg.GetComponentsInChildren<StageController>(true);
 
 			foreach(StageController s in stages)
 			{
@@ -126,17 +126,17 @@ public class SaveLoad : MonoBehaviour {
 		EnemyGeneratorController eg = GameObject.Find("EnemyGenerator").GetComponent<EnemyGeneratorController>();
 		
 		ObjectSerializer.StoreComponent(str,eg);
-		StageController[] stages = eg.GetComponentsInChildren<StageController>();
+		StageController[] stages = eg.GetComponentsInChildren<StageController>(true);
 		
 		foreach(StageController s in stages)
 		{
 			ObjectSerializer.StoreObject(str,s.gameObject);
 		}
 
-/*
+
 		StreamWriter log = new StreamWriter("g:/unity-dev/OrbitalDefender/log.txt",false);
 		log.WriteLine(str.ToString());
-		log.Close();*/
+		log.Close();
 
 
 		PlayerPrefs.SetString(CheckpointName,str.ToString());

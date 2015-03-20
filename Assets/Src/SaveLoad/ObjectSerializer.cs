@@ -166,8 +166,8 @@ public class ObjectSerializer
 		foreach(Component c in components)
 		{
 			str.WriteLine(c.GetType().Name);
-			if(c is MonoBehaviour)
-				str.WriteLine((c as MonoBehaviour).enabled);
+			if(c is Behaviour)
+				str.WriteLine((c as Behaviour).enabled);
 			else
 				str.WriteLine("true");
 
@@ -195,8 +195,8 @@ public class ObjectSerializer
 			if(byName.ContainsKey(name))
 			{
 				Component c = byName[name];
-				if(c is MonoBehaviour)
-					(c as MonoBehaviour).enabled = enabled;
+				if(c is Behaviour)
+					(c as Behaviour).enabled = enabled;
 
 				LoadComponent(str,c);
 				//LoadClass<Component>(str,c);

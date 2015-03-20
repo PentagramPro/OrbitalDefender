@@ -17,7 +17,8 @@ public class StoreBase
 		{typeof(int),new StoreInt()},
 		{typeof(float), new StoreFloat()},
 		{typeof(string), new StoreString()},
-		{typeof(CountTime), new StoreCountTime()}
+		{typeof(CountTime), new StoreCountTime()},
+		{typeof(bool), new StoreBool()}
 
 	};
 
@@ -89,6 +90,18 @@ public class StoreFloat : StoreBase
 	protected override object Load ( string val)
 	{
 		return float.Parse(val);
+	}
+	
+	#endregion
+}
+
+public class StoreBool : StoreBase
+{
+	#region implemented abstract members of StoreBase
+	
+	protected override object Load ( string val)
+	{
+		return bool.Parse(val);
 	}
 	
 	#endregion
